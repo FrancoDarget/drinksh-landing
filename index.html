@@ -1289,9 +1289,106 @@
       .cj-title { font-size: 28px; }
       .influencer-head h2 { font-size: 30px; }
     }
+    /* ══ POPUP ══════════════════════════════════════════ */
+    .popup-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.72);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .popup-overlay.visible { opacity: 1; pointer-events: all; }
+    .popup-box {
+      display: flex;
+      width: 100%; max-width: 820px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+    .popup-left {
+      flex: 1;
+      padding: 52px 44px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+    }
+    .popup-brand {
+      font-size: 38px; font-weight: 900; letter-spacing: -1px;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .popup-title {
+      font-size: 34px; font-weight: 900; line-height: 1.1;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .popup-sub {
+      font-size: 14px; color: var(--text-muted);
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+    .popup-input {
+      width: 100%; padding: 14px 16px;
+      background: var(--dark-3); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-size: 15px; font-family: inherit;
+      margin-bottom: 12px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .popup-input:focus { border-color: var(--gold); }
+    .popup-input::placeholder { color: var(--text-dim); }
+    .popup-cta {
+      width: 100%; padding: 15px;
+      background: var(--gold); color: var(--black);
+      font-size: 14px; font-weight: 900; font-family: inherit;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      border: none; border-radius: 14px; cursor: pointer;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .popup-cta:hover { opacity: 0.88; }
+    .popup-no {
+      font-size: 13px; color: var(--text-dim);
+      cursor: pointer; text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .popup-no:hover { color: var(--text-muted); }
+    .popup-right {
+      flex: 0 0 340px;
+      position: relative; overflow: hidden;
+    }
+    .popup-right img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    @media (max-width: 640px) {
+      .popup-right { display: none; }
+      .popup-left { padding: 40px 28px; }
+      .popup-title { font-size: 28px; }
+    }
   </style>
 </head>
 <body>
+
+<!-- ═══ EMAIL POPUP ═════════════════════════════ -->
+<div id="emailPopup" class="popup-overlay">
+  <div class="popup-box">
+    <div class="popup-left">
+      <div class="popup-brand">Sh!</div>
+      <h2 class="popup-title">10% OFF<br>en tu primera compra</h2>
+      <p class="popup-sub">+ envío gratis en tu primer pedido</p>
+      <input type="email" id="popupEmail" class="popup-input" placeholder="tu email" />
+      <button class="popup-cta" onclick="submitPopup()">Obtener descuento</button>
+      <span class="popup-no" onclick="closePopup()">No gracias</span>
+    </div>
+    <div class="popup-right">
+      <img src="Energia%20Real/Energia%20Real1.webp" alt="Sh! Energy Drink" />
+    </div>
+  </div>
+</div>
 
 <!-- ═══ ANNOUNCEMENT BAR ════════════════════════ -->
 <div class="ann-bar">
@@ -1589,19 +1686,16 @@
       <!-- Columna izquierda -->
       <div class="benefits-col">
         <div class="bstat">
-          <div class="bstat-num">80mg</div>
-          <div class="bstat-title">Cafeína exacta</div>
-          <div class="bstat-desc">Activa tu sistema nervioso en minutos, sin excesos ni bajones.</div>
+          <div class="bstat-num">Activación<br>en minutos</div>
+          <div class="bstat-desc">80mg de cafeína exacta activan el sistema nervioso sin excesos ni crash posterior.</div>
         </div>
         <div class="bstat">
-          <div class="bstat-num">100%</div>
-          <div class="bstat-title">Natural</div>
-          <div class="bstat-desc">Cafeína, ginseng, jalea real y miel. Nada artificial.</div>
+          <div class="bstat-num">Sin<br>porquerías</div>
+          <div class="bstat-desc">Cero colorantes artificiales. Solo ingredientes reales en las dosis exactas.</div>
         </div>
         <div class="bstat">
-          <div class="bstat-num">0</div>
-          <div class="bstat-title">Colorantes artificiales</div>
-          <div class="bstat-desc">Lo que necesitás en la dosis exacta. Nada más, nada menos.</div>
+          <div class="bstat-num">Energía<br>que dura</div>
+          <div class="bstat-desc">Miel de absorción progresiva para una activación limpia, sin picos glucémicos.</div>
         </div>
       </div>
       <!-- Centro: lata Sh! -->
@@ -1611,19 +1705,16 @@
       <!-- Columna derecha -->
       <div class="benefits-col benefits-col-right">
         <div class="bstat">
-          <div class="bstat-num">Foco</div>
-          <div class="bstat-title">Sin dispersión</div>
-          <div class="bstat-desc">Cafeína calibrada para sostener la atención sin nerviosismo.</div>
+          <div class="bstat-num">Resistencia<br>al estrés</div>
+          <div class="bstat-desc">Ginseng, adaptógeno natural que regula la respuesta del cuerpo bajo presión física y mental.</div>
         </div>
         <div class="bstat">
-          <div class="bstat-num">ANMAT</div>
-          <div class="bstat-title">Certificado</div>
-          <div class="bstat-desc">Aprobado y registrado. Calidad garantizada desde la primera lata.</div>
+          <div class="bstat-num">Vitalidad<br>profunda</div>
+          <div class="bstat-desc">Jalea real con aminoácidos esenciales y micronutrientes que refuerzan el bienestar desde adentro.</div>
         </div>
         <div class="bstat">
-          <div class="bstat-num">Argentina</div>
-          <div class="bstat-title">Hecho acá</div>
-          <div class="bstat-desc">Producido y distribuido en el país, con estándares locales.</div>
+          <div class="bstat-num">Foco<br>sostenido</div>
+          <div class="bstat-desc">Complejo B (B3, B5, B6, B12) activa el metabolismo energético y el sistema nervioso.</div>
         </div>
       </div>
     </div>
@@ -1636,23 +1727,23 @@
     <div class="features-left">
       <div class="features-content">
         <div class="sec-label">Por qué Sh!</div>
-        <h2 class="sec-title">Formulado con ingredientes<br>que funcionan.</h2>
+        <h2 class="sec-title">Incorporalo en<br>tu rutina.</h2>
         <div class="features-list">
           <div class="feat-item">
-            <h3>Energía real, sin bajones</h3>
-            <p>Cafeína y miel en dosis exactas generan una activación que dura. Sin el pico abrupto ni la caída de las energizantes comunes.</p>
+            <h3>Antes de entrenar</h3>
+            <p>Tomate una lata 20-30 minutos antes. La cafeína y el ginseng te activan justo cuando el cuerpo lo necesita, sin nerviosismo ni picos.</p>
           </div>
           <div class="feat-item">
-            <h3>Adaptación al estrés</h3>
-            <p>El Ginseng actúa como adaptógeno natural: ayuda al organismo a rendir más en momentos de alta demanda física y mental.</p>
+            <h3>Para arrancar el día</h3>
+            <p>Reemplazá el café de la mañana. Activación limpia, sin acidez, con el plus de la jalea real y el complejo B para sostener el foco desde temprano.</p>
           </div>
           <div class="feat-item">
-            <h3>Vitalidad desde adentro</h3>
-            <p>La Jalea Real aporta aminoácidos esenciales, ácidos grasos únicos y micronutrientes que refuerzan el bienestar general.</p>
+            <h3>El bajón de la tarde</h3>
+            <p>Cuando el foco cae entre las 14 y las 17hs, una lata te devuelve la concentración sin que después no puedas dormir.</p>
           </div>
           <div class="feat-item">
-            <h3>Motor celular activo</h3>
-            <p>El Complejo B (B3, B5, B6, B12) activa el metabolismo energético en cada célula y sostiene el sistema nervioso.</p>
+            <h3>Jornadas exigentes</h3>
+            <p>Estudio, trabajo intenso o viaje largo. Energía sostenida sin el crash de las energizantes comunes — para cuando más la necesitás.</p>
           </div>
         </div>
       </div>
@@ -2243,6 +2334,22 @@
     const track = document.getElementById('infTrack');
     if (track) track.scrollBy({ left: dir * 290, behavior: 'smooth' });
   }
+
+  /* ── Email popup ── */
+  function closePopup() {
+    document.getElementById('emailPopup').classList.remove('visible');
+  }
+  function submitPopup() {
+    const email = document.getElementById('popupEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('popupEmail').style.borderColor = '#e74c3c';
+      return;
+    }
+    closePopup();
+  }
+  setTimeout(function() {
+    document.getElementById('emailPopup').classList.add('visible');
+  }, 1500);
 
   /* ── Add to cart ── */
   function addToCart() {
