@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pack x4 Sh! — Energía para ser vos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:        #F0C13A;
+      --gold-light:  #F9D85C;
+      --gold-dark:   #C8970A;
+      --black:       #0D0D0D;
+      --dark:        #111111;
+      --dark-2:      #181818;
+      --dark-3:      #222222;
+      --border:      #2A2A2A;
+      --text:        #FFFFFF;
+      --text-muted:  #9E9E9E;
+      --text-dim:    #555555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ─── ANNOUNCEMENT BAR ──────────────────────── */
+    .ann-bar {
+      background: var(--gold);
+      color: var(--black);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .ann-bar a { color: var(--black); text-decoration: underline; }
+    .ann-sep { margin: 0 16px; opacity: 0.4; }
+
+    /* ─── NAV ───────────────────────────────────── */
+    nav {
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 40px;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-actions { display: flex; gap: 18px; align-items: center; }
+    .nav-icon {
+      cursor: pointer;
+      font-size: 19px;
+      transition: transform 0.15s;
+    }
+    .nav-icon:hover { transform: scale(1.15); }
+    .nav-ham { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-ham span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); border-radius: 2px;
+    }
+
+
+    /* ─── HERO ──────────────────────────────────── */
+    .hero {
+      display: flex;
+      gap: 64px;
+      padding: 32px 5% 72px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Gallery */
+    .hero-gallery {
+      flex: 0 0 500px;
+      position: sticky;
+      top: 82px;
+      height: fit-content;
+    }
+    .gallery-main {
+      background: var(--dark-2);
+      border-radius: 20px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+      cursor: zoom-in;
+    }
+    .gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .gallery-main img.active { display: block; }
+    .gallery-main .can-wrap {
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-thumbs {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .g-thumb {
+      flex: 1;
+      aspect-ratio: 1 / 1;
+      background: var(--dark-2);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+      font-size: 28px;
+    }
+    .g-thumb.active { border-color: var(--gold); }
+    .g-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-main video { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .gallery-main video.active { display: block; }
+
+    /* MP Payment block */
+    .mp-payment-block { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .mp-secure-row { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 14px; background: var(--dark-2); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; font-weight: 600; color: var(--text-muted); }
+    .mp-secure-row img { height: 28px; width: auto; object-fit: contain; flex-shrink: 0; }
+    .mp-cards { width: auto; max-width: 260px; height: auto; border-radius: 0; display: block; margin: 0 auto; }
+
+    /* Voodoo gift strip */
+    .voodoo-strip { display: flex; align-items: center; gap: 16px; padding: 12px 16px 12px 12px; background: rgba(240,193,58,0.07); border: 1px solid rgba(240,193,58,0.28); border-radius: 12px; margin-bottom: 20px; }
+    .voodoo-strip-img { width: 140px; height: 140px; object-fit: contain; flex-shrink: 0; }
+    .voodoo-strip-text strong { font-size: 18px; font-weight: 800; display: block; margin-bottom: 4px; }
+    .voodoo-strip-text span { font-size: 15px; color: var(--text-muted); }
+
+    /* Guarantee SVG icons */
+    .guarantee-svg { width: 48px; height: 48px; object-fit: contain; display: block; filter: invert(1) brightness(10); transition: opacity 0.2s; }
+    .guarantee-item:hover .guarantee-svg { opacity: 0.8; }
+
+    /* Hero Info */
+    .hero-info { flex: 1; padding-top: 4px; }
+
+    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .badge-hot { background: rgba(240,193,58,0.15); color: var(--gold); border: 1px solid rgba(240,193,58,0.35); }
+    .badge-rdp { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border); }
+
+    .hero-title {
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 14px;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: 19px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 22px;
+      max-width: 480px;
+    }
+    .hero-rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+    .stars { color: var(--gold); font-size: 17px; letter-spacing: 2px; }
+    .rating-text { font-size: 14px; color: var(--text-muted); }
+    .rating-text strong { color: var(--text); }
+
+    /* Highlight pills */
+    .highlights { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
+    .h-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: border-color 0.2s;
+    }
+    .h-pill:hover { border-color: var(--gold); }
+    .h-icon {
+      width: 22px; height: 22px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--black); flex-shrink: 0;
+    }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+    /* Pack selector */
+    .sel-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .pack-opts { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .pack-opt {
+      flex: 1; min-width: 140px;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .pack-opt:hover { border-color: rgba(240,193,58,0.5); }
+    .pack-opt.active { border-color: var(--gold); background: rgba(240,193,58,0.05); }
+    .pack-opt .p-name { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .pack-opt .p-qty { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
+    .pack-opt .p-price { font-size: 22px; font-weight: 900; color: var(--gold); line-height: 1; }
+    .pack-opt .p-price .p-unit { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+    .pack-opt .p-disc { font-size: 10px; font-weight: 700; color: #27ae60; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px; }
+    .pack-opt .p-total { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+    .pack-opt .p-per { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+    .p-badge-best { background: #27ae60 !important; color: #fff !important; }
+    .pack-voodoo-note { font-size: 12px; color: var(--text-muted); text-align: center; margin: -14px 0 26px; padding: 9px 14px; background: rgba(240,193,58,0.05); border-radius: 10px; border: 1px solid rgba(240,193,58,0.15); }
+    .pack-opt .p-badge {
+      position: absolute; top: -10px; right: 12px;
+      background: var(--gold); color: var(--black);
+      font-size: 10px; font-weight: 700;
+      padding: 3px 9px; border-radius: 100px;
+    }
+    .pack-check {
+      position: absolute; top: 10px; right: 10px;
+      width: 20px; height: 20px;
+      background: var(--gold); border-radius: 50%;
+      display: none; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--black); font-weight: 700;
+    }
+    .pack-opt.active .pack-check { display: flex; }
+
+    /* Quantity */
+    .qty-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .qty-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+    .qty-ctrl { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .qty-btn {
+      background: var(--dark-2); border: none;
+      width: 40px; height: 40px;
+      color: var(--text); font-size: 18px; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .qty-btn:hover { background: var(--dark-3); }
+    .qty-val {
+      width: 48px; height: 40px;
+      background: var(--dark); border: none;
+      color: var(--text); font-size: 15px; font-weight: 700;
+      text-align: center;
+    }
+
+    /* CTA */
+    .btn-cta {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 19px;
+      font-size: 17px;
+      font-weight: 900;
+      border-radius: 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+    .btn-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(240,193,58,0.35);
+    }
+    .btn-secondary {
+      width: 100%;
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--border);
+      padding: 17px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Trust row */
+    .trust-row {
+      display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--text-muted); font-weight: 500;
+    }
+    .trust-item span { font-size: 16px; }
+
+    /* Available at */
+    .avail {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .avail-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text-dim); margin-bottom: 12px;
+    }
+    .retailers {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .ret-pill {
+      background: var(--dark-2); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: 6px;
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .ret-pill:hover { border-color: var(--gold); color: var(--text); }
+
+    /* ─── STATS BAR ─────────────────────────────── */
+    .stats-bar {
+      background: var(--gold);
+      padding: 52px 5%;
+    }
+    .stats-grid {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .stat-item { text-align: center; flex: 1; min-width: 110px; }
+    .stat-val {
+      font-size: 38px; font-weight: 900;
+      color: var(--black); line-height: 1;
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      letter-spacing: 1px;
+    }
+    .stat-lbl {
+      font-size: 12px; color: rgba(0,0,0,0.6);
+      font-weight: 700; margin-top: 6px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .stat-sep {
+      width: 1px; height: 52px;
+      background: rgba(0,0,0,0.2);
+    }
+
+    /* ─── SECTION COMMONS ───────────────────────── */
+    .section-wrap { padding: 88px 5%; }
+    .sec-label {
+      font-size: 11px; font-weight: 700;
+      color: var(--gold); text-transform: uppercase;
+      letter-spacing: 2.5px; margin-bottom: 12px;
+    }
+    .sec-title {
+      font-size: 42px; font-weight: 900;
+      line-height: 1.1; letter-spacing: -1px;
+    }
+    .sec-sub {
+      font-size: 17px; color: var(--text-muted);
+      margin-top: 14px; max-width: 560px;
+    }
+    .sec-header { max-width: 1200px; margin: 0 auto 56px; }
+    .sec-header.center { text-align: center; }
+    .sec-header.center .sec-sub { margin-left: auto; margin-right: auto; }
+
+    /* ─── TABS SECTION ──────────────────────────── */
+    .tabs-section { padding: 0 5% 88px; max-width: 1400px; margin: 0 auto; }
+    .tabs-header {
+      display: flex; border-bottom: 2px solid var(--border);
+      margin-bottom: 52px; overflow-x: auto;
+    }
+    .tab-btn {
+      padding: 16px 26px; background: none; border: none;
+      color: var(--text-muted); font-size: 15px; font-weight: 600;
+      cursor: pointer; border-bottom: 3px solid transparent;
+      margin-bottom: -2px; white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: flex; gap: 64px; flex-wrap: wrap; align-items: flex-start; }
+
+    /* Ingredients */
+    .ingr-list { flex: 1; min-width: 280px; }
+    .ingr-card {
+      display: flex; gap: 18px;
+      padding: 22px 0; border-bottom: 1px solid var(--border);
+    }
+    .ingr-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      background: rgba(240,193,58,0.08);
+      border: 1px solid rgba(240,193,58,0.25);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .ingr-info h4 { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+    .ingr-info p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Nutrition panel */
+    .nutri-panel {
+      flex: 0 0 360px;
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+    }
+    .nutri-head {
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 14px; margin-bottom: 14px;
+    }
+    .nutri-head h3 { font-size: 22px; font-weight: 900; }
+    .nutri-head p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .nutri-energy {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      padding: 12px 0; border-bottom: 3px solid var(--text); margin-bottom: 4px;
+    }
+    .nutri-energy .kcal { font-size: 36px; font-weight: 900; color: var(--gold); line-height: 1; }
+    .nutri-energy .kcal-sub { font-size: 13px; color: var(--text-muted); text-align: right; }
+    .nutri-row {
+      display: flex; justify-content: space-between;
+      padding: 9px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .nutri-row.bold { font-weight: 700; }
+    .nutri-row.indent { padding-left: 18px; color: var(--text-muted); }
+    .nutri-row .dv { color: var(--text-muted); font-size: 12px; }
+    .nutri-footnote {
+      margin-top: 14px; font-size: 11px; color: var(--text-dim); line-height: 1.5;
+    }
+
+    /* How to tab */
+    .howto-grid { display: flex; flex-wrap: wrap; gap: 24px; width: 100%; }
+    .howto-card {
+      flex: 1; min-width: 200px;
+      background: var(--dark-2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .howto-num {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 48px; color: rgba(240,193,58,0.2); line-height: 1;
+    }
+    .howto-card h4 { font-size: 18px; font-weight: 800; }
+    .howto-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ─── BENEFITS ──────────────────────────────── */
+    .benefits-section {
+      background: var(--dark-2);
+      padding: 88px 5%;
+    }
+    .benefits-grid {
+      display: flex; flex-wrap: wrap; gap: 22px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .benefit-card {
+      flex: 1; min-width: 280px;
+      background: var(--dark); border: 1px solid var(--border);
+      border-radius: 18px; padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .benefit-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+    .benefit-ico {
+      width: 56px; height: 56px;
+      background: rgba(240,193,58,0.1);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 22px;
+    }
+    .benefit-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+    .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ─── MANIFESTO ─────────────────────────────── */
+    .manifesto {
+      background: var(--gold);
+      padding: 110px 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto::before {
+      content: 'Sh!';
+      position: absolute;
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 400px;
+      color: rgba(0,0,0,0.05);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .manifesto-tag {
+      font-size: 12px; font-weight: 700;
+      color: rgba(0,0,0,0.45);
+      text-transform: uppercase; letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+    .manifesto-h1 {
+      font-size: 90px; font-weight: 900; color: var(--black);
+      line-height: 1; letter-spacing: -4px;
+      margin-bottom: 22px;
+    }
+    .manifesto-p {
+      font-size: 20px; color: rgba(0,0,0,0.65);
+      max-width: 620px; margin: 0 auto 44px;
+      font-weight: 500; line-height: 1.6;
+    }
+    .manifesto-btn {
+      background: var(--black); color: var(--gold);
+      border: none; padding: 17px 44px;
+      font-size: 16px; font-weight: 800;
+      border-radius: 100px; cursor: pointer;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      transition: all 0.2s;
+    }
+    .manifesto-btn:hover {
+      background: #1a1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    /* ─── CERTIFICATIONS ────────────────────────── */
+    .certs-section { padding: 72px 5%; border-bottom: 1px solid var(--border); }
+    .certs-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+    .certs-title {
+      font-size: 13px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 36px;
+    }
+    .certs-row {
+      display: flex; justify-content: center;
+      align-items: center; gap: 48px; flex-wrap: wrap;
+    }
+    .cert-item {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .cert-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      transition: border-color 0.2s;
+    }
+    .cert-circle:hover { border-color: var(--gold); }
+
+    /* ─── PRESS ─────────────────────────────────── */
+    .press-section { padding: 64px 5%; border-bottom: 1px solid var(--border); }
+    .press-inner { max-width: 1100px; margin: 0 auto; }
+    .press-lbl {
+      text-align: center; font-size: 12px; font-weight: 700;
+      color: var(--text-dim); text-transform: uppercase;
+      letter-spacing: 2.5px; margin-bottom: 36px;
+    }
+    .press-logos {
+      display: flex; justify-content: center;
+      align-items: center; gap: 52px; flex-wrap: wrap;
+    }
+    .press-logo {
+      font-family: Georgia, serif;
+      font-size: 20px; font-weight: 900;
+      color: var(--text-dim); letter-spacing: -0.5px;
+      transition: color 0.2s; text-decoration: none;
+    }
+    .press-logo:hover { color: var(--text); }
+
+    /* Press quotes row */
+    .press-quotes {
+      display: flex; gap: 24px; margin-top: 56px; flex-wrap: wrap;
+      max-width: 1100px; margin: 56px auto 0;
+    }
+    .press-quote-card {
+      flex: 1; min-width: 260px;
+      background: var(--dark-2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .press-quote-text {
+      font-size: 15px; font-style: italic; color: var(--text-muted);
+      line-height: 1.6; margin-bottom: 18px;
+    }
+    .press-quote-source {
+      font-size: 12px; font-weight: 700; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* ─── ENDORSEMENTS ──────────────────────────── */
+    .endorse-section {
+      background: var(--dark-2); padding: 88px 5%;
+    }
+    .endorse-inner { max-width: 1200px; margin: 0 auto; }
+    .endorse-grid { display: flex; gap: 28px; flex-wrap: wrap; }
+
+    .endorse-card {
+      flex: 1; min-width: 280px;
+      background: var(--dark); border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .endorse-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .endorse-card.hero-card {
+      flex: 2; min-width: 400px;
+      border-color: rgba(240,193,58,0.4);
+    }
+    .endorse-card.hero-card:hover { border-color: var(--gold); }
+
+    .endorse-img {
+      width: 100%; height: 300px;
+      object-fit: cover; display: block;
+    }
+    .endorse-img-ph {
+      width: 100%; height: 300px;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 72px; color: var(--gold);
+    }
+    .endorse-card.hero-card .endorse-img-ph {
+      height: 380px;
+      background: linear-gradient(160deg, #1a1a1a, #252525, rgba(240,193,58,0.07));
+      font-size: 100px;
+    }
+
+    .endorse-body { padding: 28px; }
+    .endorse-quote {
+      font-size: 17px; font-style: italic;
+      font-weight: 500; line-height: 1.55;
+      margin-bottom: 22px; color: var(--text);
+    }
+    .endorse-card.hero-card .endorse-quote { font-size: 22px; }
+    .endorse-meta { display: flex; align-items: center; gap: 12px; }
+    .endorse-av {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 18px; color: var(--black);
+      flex-shrink: 0;
+    }
+    .endorse-name { font-weight: 700; font-size: 15px; }
+    .endorse-role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .endorse-card.hero-card .endorse-av {
+      width: 52px; height: 52px; font-size: 20px;
+    }
+
+    /* ─── REVIEWS ───────────────────────────────── */
+    .reviews-section { padding: 88px 5%; }
+    .reviews-inner { max-width: 1200px; margin: 0 auto; }
+    .reviews-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 52px;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .overall-r { display: flex; align-items: center; gap: 22px; }
+    .overall-score {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 80px; color: var(--gold); line-height: 1;
+    }
+    .overall-stars .stars { font-size: 26px; }
+    .overall-stars p { font-size: 14px; color: var(--text-muted); margin-top: 6px; }
+
+    .reviews-grid { display: flex; gap: 22px; flex-wrap: wrap; }
+    .review-card {
+      flex: 1; min-width: 260px;
+      background: var(--dark-2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .review-card:hover { border-color: var(--gold); }
+    .r-stars { color: var(--gold); font-size: 15px; margin-bottom: 14px; }
+    .r-text { font-size: 15px; line-height: 1.65; margin-bottom: 22px; color: var(--text); }
+    .r-author { display: flex; align-items: center; gap: 12px; }
+    .r-av {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 15px; color: var(--black);
+      flex-shrink: 0;
+    }
+    .r-name { font-weight: 700; font-size: 14px; }
+    .r-date { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+    .r-verified { font-size: 11px; color: var(--gold); font-weight: 700; margin-top: 2px; }
+
+    /* ─── COMPARISON ────────────────────────────── */
+    .compare-section { background: var(--dark-2); padding: 88px 5%; }
+    .compare-table {
+      width: 100%; max-width: 900px; margin: 0 auto;
+      border-collapse: collapse;
+    }
+    .compare-table th {
+      padding: 18px 24px; text-align: left;
+      font-size: 13px; font-weight: 700;
+      color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 1px; border-bottom: 2px solid var(--border);
+    }
+    .compare-table th.highlight { color: var(--gold); }
+    .compare-table td {
+      padding: 16px 24px; font-size: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table td:first-child { color: var(--text-muted); font-weight: 600; }
+    .compare-table td.highlight {
+      color: var(--text); font-weight: 700;
+      background: rgba(240,193,58,0.04);
+    }
+    .compare-table .check { color: var(--gold); font-size: 17px; }
+    .compare-table .cross { color: var(--text-dim); font-size: 17px; }
+
+    /* ─── FAQ ───────────────────────────────────── */
+    .faq-section { padding: 88px 5%; }
+    .faq-inner { max-width: 780px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 0; cursor: pointer;
+      font-size: 16px; font-weight: 600; gap: 20px;
+    }
+    .faq-ico {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 300; color: var(--gold);
+      flex-shrink: 0; transition: transform 0.25s;
+    }
+    .faq-item.open .faq-ico { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+      font-size: 15px; color: var(--text-muted); line-height: 1.7;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 24px; }
+
+    /* ─── RELATED ───────────────────────────────── */
+    .related-section { background: var(--dark-2); padding: 88px 5%; }
+    .related-grid {
+      display: flex; gap: 22px; flex-wrap: wrap;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .rel-card {
+      flex: 1; min-width: 200px;
+      background: var(--dark); border: 1px solid var(--border);
+      border-radius: 18px; overflow: hidden;
+      cursor: pointer; transition: border-color 0.2s, transform 0.2s;
+    }
+    .rel-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .rel-img {
+      width: 100%; height: 190px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--dark-2); font-size: 54px; position: relative;
+    }
+    .rel-img img { width: 100%; height: 100%; object-fit: cover; }
+    .rel-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(240,193,58,0.18); color: var(--gold);
+      border: 1px solid rgba(240,193,58,0.4);
+      font-size: 10px; font-weight: 700;
+      padding: 4px 10px; border-radius: 100px;
+    }
+    .rel-body { padding: 20px; }
+    .rel-name { font-size: 16px; font-weight: 800; margin-bottom: 6px; }
+    .rel-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
+    .rel-price { font-size: 22px; font-weight: 900; color: var(--gold); margin-bottom: 14px; }
+    .rel-btn {
+      width: 100%; background: var(--dark-2); color: var(--text);
+      border: 1px solid var(--border);
+      padding: 11px; border-radius: 8px;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .rel-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+    /* ─── NEWSLETTER ────────────────────────────── */
+    .newsletter {
+      background: var(--dark-3);
+      padding: 72px 5%;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .newsletter h2 { font-size: 38px; font-weight: 900; margin-bottom: 10px; }
+    .newsletter h2 span { color: var(--gold); }
+    .newsletter p { font-size: 16px; color: var(--text-muted); margin-bottom: 32px; }
+    .nl-form {
+      display: flex; gap: 12px; max-width: 480px;
+      margin: 0 auto; flex-wrap: wrap; justify-content: center;
+    }
+    .nl-input {
+      flex: 1; min-width: 220px;
+      padding: 16px 18px; background: var(--dark);
+      border: 1px solid var(--border); border-radius: 12px;
+      color: var(--text); font-size: 15px;
+      outline: none; transition: border-color 0.2s;
+    }
+    .nl-input:focus { border-color: var(--gold); }
+    .nl-btn {
+      background: var(--gold); color: var(--black);
+      border: none; padding: 16px 28px;
+      border-radius: 14px; font-size: 15px; font-weight: 900;
+      font-family: inherit; letter-spacing: 0.5px;
+      cursor: pointer; white-space: nowrap; transition: all 0.2s;
+    }
+    .nl-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    /* ─── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--dark-2);
+      border-top: 1px solid var(--border);
+      padding: 64px 5% 32px;
+    }
+    .footer-main {
+      display: flex; gap: 56px; flex-wrap: wrap;
+      max-width: 1200px; margin: 0 auto 52px;
+    }
+    .footer-brand { flex: 0 0 260px; }
+    .footer-logo {
+      font-family: 'Bebas Neue', Impact, sans-serif;
+      font-size: 52px; color: var(--gold);
+      letter-spacing: 4px; line-height: 1;
+      margin-bottom: 16px; display: block;
+    }
+    .footer-tagline {
+      font-size: 14px; color: var(--text-muted);
+      line-height: 1.65; margin-bottom: 26px;
+    }
+    .socials { display: flex; gap: 10px; }
+    .soc-btn {
+      width: 40px; height: 40px;
+      background: var(--dark-3); border: 1px solid var(--border);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; cursor: pointer; transition: all 0.2s;
+      text-decoration: none; color: var(--text-muted);
+    }
+    .soc-btn:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+    .footer-col { flex: 1; min-width: 150px; }
+    .footer-col h4 {
+      font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text-muted); margin-bottom: 18px;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 14px; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 28px; border-top: 1px solid var(--border);
+      max-width: 1200px; margin: 0 auto;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-legal { font-size: 12px; color: var(--text-dim); }
+    .payment-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .pay-badge {
+      background: var(--dark-3); border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: 5px;
+      font-size: 11px; font-weight: 700; color: var(--text-dim);
+    }
+
+    /* ─── CAN SVG ───────────────────────────────── */
+    .can-svg-wrap {
+      padding: 48px 32px; display: flex; align-items: center; justify-content: center;
+    }
+    .hero-can {
+      width: 240px; height: auto;
+      filter: drop-shadow(0 24px 48px rgba(240,193,58,0.35));
+      animation: canFloat 3s ease-in-out infinite;
+    }
+    @keyframes canFloat {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero-gallery { flex: 0 0 420px; }
+      .hero-title { font-size: 44px; }
+    }
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; gap: 40px; padding: 32px 5% 56px; }
+      .hero-gallery { flex: none; width: 100%; position: static; }
+      .hero-title { font-size: 38px; }
+      .pack-opts { flex-wrap: wrap; }
+      .stat-sep { display: none; }
+      .manifesto-h1 { font-size: 64px; }
+      .nutri-panel { flex: none; width: 100%; }
+      .endorse-card.hero-card { flex: none; width: 100%; }
+      .nav-links { display: none; }
+      .nav-ham { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .hero-title { font-size: 30px; }
+      .manifesto-h1 { font-size: 44px; letter-spacing: -2px; }
+      .manifesto-p { font-size: 16px; }
+      .sec-title { font-size: 32px; }
+      .stat-val { font-size: 30px; }
+      .overall-score { font-size: 60px; }
+      .footer-brand { flex: none; width: 100%; }
+      .gallery-thumbs { gap: 8px; }
+      .pack-opts > .pack-opt { min-width: 100%; }
+      .compare-section { overflow-x: auto; }
+    }
+
+    /* ─── VIRAL BADGE ───────────────────────────── */
+    .viral-badge {
+      position: absolute; top: 14px; left: 14px; z-index: 10;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff; padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.3px;
+      pointer-events: none;
+    }
+
+    /* ─── PURCHASE OPTIONS (Huel style) ────────── */
+    .purch-wrap { margin-bottom: 20px; }
+    .purch-popular {
+      text-align: center;
+      background: var(--gold); color: var(--black);
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 9px; border-radius: 12px 12px 0 0;
+    }
+    .purch-opt {
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 18px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .purch-opt.popular { border-radius: 0 0 14px 14px; border-top: none; margin-bottom: 10px; }
+    .purch-opt:hover { border-color: rgba(240,193,58,0.5); }
+    .purch-opt.active { border-color: var(--gold); background: rgba(240,193,58,0.04); }
+    .purch-opt-row { display: flex; align-items: flex-start; gap: 14px; }
+    .radio-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0; margin-top: 3px;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .radio-dot::after {
+      content: ''; position: absolute;
+      top: 3px; left: 3px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .purch-opt.active .radio-dot { border-color: var(--gold); }
+    .purch-opt.active .radio-dot::after { opacity: 1; }
+    .purch-opt-info { flex: 1; }
+    .purch-opt-title { font-size: 15px; font-weight: 700; }
+    .purch-opt-price {
+      font-size: 22px; font-weight: 900;
+      color: var(--gold); line-height: 1.2; margin-top: 4px;
+    }
+    .purch-opt-price .strike {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-dim); text-decoration: line-through; margin-left: 6px;
+    }
+    .purch-opt-per { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+    .purch-opt-pack { font-size: 12px; color: var(--text-muted); white-space: nowrap; padding-top: 3px; }
+    .sub-details {
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid var(--border); display: none;
+    }
+    .purch-opt.active .sub-details { display: block; }
+    .sub-how-title {
+      font-size: 11px; font-weight: 700;
+      color: var(--text-muted); text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .sub-benefits { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .sub-benefits div {
+      font-size: 13px; color: var(--text-muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sub-benefits .chk { color: var(--gold); font-size: 14px; flex-shrink: 0; }
+    .freq-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text-muted);
+    }
+    .freq-sel {
+      background: var(--dark-3); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 12px;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      cursor: pointer; outline: none; flex: 1;
+    }
+
+    /* Payment row (hero) */
+    .payment-row-hero {
+      display: flex; gap: 8px; align-items: center;
+      margin: 14px 0 18px; flex-wrap: wrap;
+    }
+    .pay-ico {
+      background: var(--dark-2); border: 1px solid var(--border);
+      padding: 5px 11px; border-radius: 6px;
+      font-size: 11px; font-weight: 700; color: var(--text-muted);
+    }
+
+    /* Shipping strip */
+    .ship-strip {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 13px 16px;
+      background: rgba(240,193,58,0.05);
+      border: 1px solid rgba(240,193,58,0.2);
+      border-radius: 10px; margin-bottom: 10px; font-size: 13px;
+    }
+    .ship-strip .sico { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+    .ship-strip strong { color: var(--text); }
+    .ship-strip a { color: var(--gold); text-decoration: none; font-weight: 600; }
+
+    /* Gift accordion */
+    .gift-box {
+      border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; margin-bottom: 8px;
+    }
+    .gift-box-hd {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 18px; cursor: pointer; transition: background 0.15s;
+    }
+    .gift-box-hd:hover { background: var(--dark-2); }
+    .gift-box-title {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 700;
+    }
+    .gift-chev {
+      font-size: 11px; color: var(--text-muted);
+      transition: transform 0.2s; line-height: 1;
+    }
+    .gift-box.open .gift-chev { transform: rotate(180deg); }
+    .gift-box-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .gift-box.open .gift-box-body { max-height: 300px; }
+    .gift-box-inner {
+      padding: 0 18px 18px;
+      display: flex; gap: 16px; align-items: center;
+    }
+    .gift-img {
+      width: 80px; height: 80px;
+      background: var(--dark-3); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; flex-shrink: 0;
+    }
+    .gift-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .gift-text p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Info accordions (below purchase) */
+    .info-accords { border-top: 1px solid var(--border); margin-bottom: 22px; }
+    .info-accord { border-bottom: 1px solid var(--border); }
+    .info-accord-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 0; cursor: pointer;
+      font-size: 14px; font-weight: 600; color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .info-accord-q:hover { color: var(--text); }
+    .info-accord-ico { font-size: 12px; color: var(--text-dim); transition: transform 0.2s; }
+    .info-accord.open .info-accord-ico { transform: rotate(180deg); }
+    .info-accord-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+      font-size: 13px; color: var(--text-muted); line-height: 1.65;
+    }
+    .info-accord.open .info-accord-body { max-height: 200px; padding-bottom: 16px; }
+
+    /* Guarantee icons row */
+    .guarantee-row {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 4px 0;
+    }
+    .guarantee-item {
+      display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1;
+      font-size: 9px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .guarantee-circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; transition: border-color 0.2s;
+    }
+    .guarantee-circle:hover { border-color: var(--gold); }
+
+    /* ─── UGC SECTION ──────────────────────────────── */
+    .ugc-section { padding: 80px 5%; background: var(--dark-2); border-top: 1px solid var(--border); }
+    .ugc-section-inner { max-width: 1200px; margin: 0 auto; }
+    .ugc-head { text-align: center; margin-bottom: 48px; }
+    .ugc-head h2 { font-size: 40px; font-weight: 900; margin-bottom: 12px; }
+    .ugc-head p { font-size: 16px; color: var(--text-muted); }
+    .ugc-grid { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
+    .ugc-card { flex: 0 0 260px; position: relative; border-radius: 20px; overflow: hidden; cursor: pointer; background: var(--dark-3); }
+    .ugc-card img { width: 100%; height: 400px; object-fit: cover; display: block; }
+    .ugc-card-bg { width: 100%; height: 400px; background: var(--dark-3); display: flex; align-items: center; justify-content: center; font-size: 80px; }
+    .ugc-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.92); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--black); transition: transform 0.2s; pointer-events: none; padding-left: 4px; }
+    .ugc-card:hover .ugc-play { transform: translate(-50%, -50%) scale(1.1); }
+    .ugc-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 16px 16px; background: linear-gradient(transparent, rgba(0,0,0,0.82)); }
+    .ugc-user { font-size: 13px; font-weight: 800; color: #fff; }
+    .ugc-caption { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+    .press-mini { margin-top: 56px; text-align: center; }
+    .press-mini-lbl { font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+    .press-mini-logos { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; }
+    .press-mini-logo { font-family: Georgia, 'Times New Roman', serif; font-size: 19px; font-weight: 900; color: var(--text-dim); transition: color 0.2s; cursor: pointer; letter-spacing: -0.5px; }
+    .press-mini-logo:hover { color: var(--text); }
+
+    /* ─── DARK BENEFITS — 3 columnas ────────────────── */
+    .benefits-dark-section { background: var(--black); padding: 100px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .benefits-dark-inner { max-width: 1100px; margin: 0 auto; }
+    .benefits-dark-title { text-align: center; font-size: 50px; font-weight: 900; line-height: 1.1; margin-bottom: 72px; }
+    .benefits-dark-title em { color: var(--gold); font-style: italic; }
+    .benefits-3col { display: flex; align-items: center; gap: 32px; }
+    .benefits-col { flex: 0 0 220px; display: flex; flex-direction: column; gap: 36px; }
+    .benefits-col-right .bstat { text-align: right; }
+    .benefits-center { flex: 1; text-align: center; padding: 0 16px; }
+    .benefits-center img { width: 100%; max-width: 320px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 24px 60px rgba(240,193,58,0.35)); }
+    .bstat-num { font-family: 'Bebas Neue', Impact, sans-serif; font-size: 34px; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .bstat-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .bstat-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ─── FEATURES SPLIT LAYOUT ─────────────────────── */
+    .features-section { background: var(--dark-2); padding: 0; overflow: hidden; border-top: 1px solid var(--border); }
+    .features-inner { display: flex; align-items: stretch; min-height: 520px; }
+    .features-left { flex: 1; display: flex; align-items: center; padding: 88px 60px 88px max(5%, calc((90vw - 1200px) / 2 + 5vw)); }
+    .features-content { width: 100%; max-width: 520px; }
+    .features-content .sec-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--gold); margin-bottom: 14px; }
+    .features-content .sec-title { font-size: 40px; font-weight: 900; line-height: 1.1; margin-bottom: 44px; }
+    .features-list { display: flex; flex-direction: column; gap: 28px; }
+    .feat-item { display: flex; flex-direction: column; gap: 6px; padding-left: 16px; border-left: 2px solid var(--gold); }
+    .feat-item h3 { font-size: 16px; font-weight: 800; }
+    .feat-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .features-right { flex: 0 0 46%; position: relative; overflow: hidden; }
+    .features-right img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ─── INGREDIENTS CAROUSEL ───────────────────────── */
+    .ingr-carousel-section { padding: 88px 5%; background: var(--dark); }
+    .ingr-carousel-inner { max-width: 1300px; margin: 0 auto; }
+    .ingr-carousel-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 56px; flex-wrap: wrap; gap: 32px; }
+    .ingr-carousel-hd-left h2 { font-size: 40px; font-weight: 900; line-height: 1.2; }
+    .ingr-carousel-hd-left h2 em { font-style: italic; color: var(--gold); }
+    .ingr-carousel-hd-right { max-width: 320px; }
+    .ingr-carousel-hd-right p { font-size: 15px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+    .ingr-track { display: flex; gap: 32px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+    .ingr-track::-webkit-scrollbar { display: none; }
+    .ingr-item { flex: 0 0 clamp(260px, 27vw, 340px); text-align: left; scroll-snap-align: start; }
+    .ingr-oval { width: 100%; aspect-ratio: 1 / 1.1; margin: 0 0 26px; border-radius: 28px; overflow: hidden; background: var(--dark-2); display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); position: relative; }
+    .ingr-oval img { width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; }
+    .ingr-item h4 { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+    .ingr-item p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .ingr-carousel-nav { display: flex; justify-content: flex-end; align-items: center; margin-top: 36px; }
+    .ingr-arrows { display: flex; gap: 12px; }
+    .ingr-arrow-btn { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--border); background: transparent; color: var(--text); display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.2s; font-family: inherit; line-height: 1; }
+    .ingr-arrow-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── COMPARISON MINIMALISTA ─────────────────────── */
+    .compare-javvy { padding: 88px 5%; background: var(--dark-2); }
+    .compare-javvy-inner { max-width: 1000px; margin: 0 auto; }
+    .cj-title { text-align: center; font-size: 38px; font-weight: 900; margin-bottom: 52px; line-height: 1.15; }
+    .cj-title span { color: var(--gold); }
+    .cj-table { width: 100%; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+    .cj-header { display: flex; background: var(--dark-3); border-bottom: 1px solid var(--border); }
+    .cj-header > div { flex: 1; padding: 24px 16px; text-align: center; font-size: 15px; font-weight: 800; }
+    .cj-th-label { flex: 0 0 170px !important; text-align: left; color: var(--text-dim); font-size: 12px; }
+    .cj-th-sh { color: var(--gold); background: rgba(240,193,58,0.07); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .cj-th-sh img { width: 54px; height: auto; object-fit: contain; filter: drop-shadow(0 4px 14px rgba(240,193,58,0.45)); }
+    .cj-th-grey { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-muted); }
+    .cj-th-grey img { width: 54px; height: auto; object-fit: contain; opacity: 0.55; }
+    .cj-table-row { display: flex; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .cj-table-row:last-child { border-bottom: none; }
+    .cj-table-row > div { flex: 1; padding: 17px 16px; text-align: center; font-size: 13px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-weight: 500; }
+    .cj-td-label { flex: 0 0 170px !important; text-align: left; justify-content: flex-start !important; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 600; }
+    .cj-td-sh { background: rgba(240,193,58,0.03); color: var(--gold); font-weight: 700; font-size: 13px; }
+    .cj-td-good { color: #27ae60; font-weight: 700; }
+    .cj-td-bad { color: #e74c3c; font-weight: 600; }
+
+    /* ─── DARK PRESS + INFLUENCER ────────────────────── */
+    .press-dark-section { background: #090909; padding: 88px 5%; border-top: 1px solid var(--border); }
+    .press-dark-inner { max-width: 1200px; margin: 0 auto; }
+    .media-section-lbl { font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 32px; text-align: center; }
+    .media-cards { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 80px; }
+    .media-card { flex: 1; min-width: 220px; border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; background: var(--dark-2); transition: border-color 0.2s; }
+    .media-card:hover { border-color: rgba(255,255,255,0.18); }
+    .media-card-name { font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 900; color: rgba(255,255,255,0.7); letter-spacing: -0.5px; }
+    .media-card blockquote { font-size: 14px; font-style: italic; color: rgba(255,255,255,0.45); line-height: 1.7; flex: 1; margin: 0; }
+    .influencer-head { margin-bottom: 36px; }
+    .influencer-head h2 { font-size: 40px; font-weight: 900; line-height: 1.2; margin-bottom: 10px; }
+    .influencer-head h2 em { color: var(--gold); font-style: italic; }
+    .influencer-head p { font-size: 15px; color: var(--text-muted); }
+    .influencer-track { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
+    .inf-card { flex: 0 0 280px; background: var(--dark-2); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; cursor: pointer; transition: border-color 0.25s; }
+    .inf-card:hover { border-color: var(--gold); }
+    .inf-card.inf-featured { border-color: rgba(240,193,58,0.45); }
+    .inf-img-ph { width: 100%; height: 300px; overflow: hidden; }
+    .inf-img-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .inf-body { padding: 18px 20px; }
+    .inf-name { font-size: 15px; font-weight: 800; display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+    .inf-verify { color: var(--gold); font-size: 14px; }
+    .inf-role { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+    .inf-quote { font-size: 14px; font-style: italic; color: rgba(255,255,255,0.52); line-height: 1.55; }
+    .influencer-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+    .inf-dots { display: flex; gap: 8px; }
+    .inf-dot { width: 10px; height: 10px; border-radius: 50%; border: none; background: var(--border); cursor: pointer; }
+    .inf-dot.active { background: var(--text); }
+    .inf-arrows { display: flex; gap: 12px; }
+    .inf-arrow-btn { width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid var(--border); background: transparent; color: var(--text); display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.2s; font-family: inherit; line-height: 1; }
+    .inf-arrow-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── RESPONSIVE: NEW SECTIONS ──────────────────── */
+    @media (max-width: 900px) {
+      .benefits-3col { flex-direction: column; gap: 32px; }
+      .benefits-center { flex: none; width: 200px; margin: 0 auto; }
+      .benefits-col-right .bstat { text-align: left; }
+      .features-inner { flex-direction: column-reverse; min-height: unset; }
+      .features-left { flex: none; width: 100%; padding: 60px 5%; }
+      .features-right { flex: none; width: 100%; height: 320px; }
+      .ingr-carousel-header { flex-direction: column; }
+      .ingr-carousel-hd-right { max-width: 100%; }
+      .cj-grid { flex-direction: column; }
+      .cj-col.cj-featured { transform: none; }
+      .cj-col { margin: 0; border-radius: 14px; }
+      .media-logos-row { gap: 28px; }
+      .media-quotes-row { flex-direction: column; }
+    }
+    @media (max-width: 600px) {
+      .ugc-head h2 { font-size: 28px; }
+      .benefits-dark-left h2 { font-size: 36px; }
+      .stat-block .s-num { font-size: 38px; }
+      .ingr-carousel-hd-left h2 { font-size: 30px; }
+      .cj-title { font-size: 28px; }
+      .influencer-head h2 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ ANNOUNCEMENT BAR ════════════════════════ -->
+<div class="ann-bar">
+  📦 Envío gratis a todo el país en compras mayores a $50.000
+</div>
+
+<!-- ═══ NAVIGATION ═══════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Sh!</a>
+    <ul class="nav-links">
+      <li><a href="#">Tienda</a></li>
+      <li><a href="#">¿Qué es Sh!?</a></li>
+      <li><a href="#">Ingredientes</a></li>
+      <li><a href="#">Distribuidores</a></li>
+      <li><a href="#">Rodrigo de Paul</a></li>
+    </ul>
+    <div class="nav-actions">
+      <span class="nav-icon" style="display:flex;align-items:center;color:var(--text);width:22px;height:22px;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg></span>
+      <div class="nav-ham" id="navHam">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ══════════════════════════════════════ -->
+<section class="hero">
+
+  <!-- Gallery -->
+  <div class="hero-gallery">
+    <div class="gallery-main" id="galleryMain">
+      <div class="viral-badge">🔥 Viral en las redes</div>
+      <!-- Video principal (activo por defecto) -->
+      <video id="galleryItem0" class="active" autoplay muted loop playsinline>
+        <source src="Galeria%20Hero/Video%20Principal.mp4" type="video/mp4">
+      </video>
+      <!-- Fotos de la galería -->
+      <img id="galleryItem1" src="Galeria%20Hero/Foto%201%20sh.jpg" alt="Sh! Energy Drink" />
+      <img id="galleryItem2" src="Galeria%20Hero/Foto%202%20sh.jpg" alt="Pack x4 Sh!" />
+      <img id="galleryItem3" src="Galeria%20Hero/Foto%203%20SH.jpg" alt="Sh! — en tu mundo" />
+      <img id="galleryItem4" src="Galeria%20Hero/Foto%204%20SH.jpg" alt="Sh! — detalles" />
+    </div>
+
+    <!-- Thumbnails -->
+    <div class="gallery-thumbs">
+      <div class="g-thumb active" data-idx="0" style="font-size:22px; color:var(--gold);">▶</div>
+      <div class="g-thumb" data-idx="1">
+        <img src="Galeria%20Hero/Foto%201%20sh.jpg" alt="" />
+      </div>
+      <div class="g-thumb" data-idx="2">
+        <img src="Galeria%20Hero/Foto%202%20sh.jpg" alt="" />
+      </div>
+      <div class="g-thumb" data-idx="3">
+        <img src="Galeria%20Hero/Foto%203%20SH.jpg" alt="" />
+      </div>
+      <div class="g-thumb" data-idx="4">
+        <img src="Galeria%20Hero/Foto%204%20SH.jpg" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Info -->
+  <div class="hero-info">
+    <div class="hero-rating">
+      <span class="stars">★★★★★</span>
+      <span class="rating-text"><strong>4.8</strong> — Más de 847 opiniones verificadas</span>
+    </div>
+
+    <h1 class="hero-title">Pack x4 <span>Sh!</span></h1>
+    <p class="hero-sub">La bebida energizante que no te pide que cambies. Energía de verdad, sin vueltas.</p>
+
+    <div class="highlights">
+      <div class="h-pill"><div class="h-icon">⚡</div>Energía sostenida</div>
+      <div class="h-pill"><div class="h-icon">🧠</div>Foco mental</div>
+      <div class="h-pill"><div class="h-icon">📉</div>Sin bajones</div>
+      <div class="h-pill"><div class="h-icon">💪</div>Recuperación muscular</div>
+      <div class="h-pill"><div class="h-icon">✅</div>Cero colorantes artificiales</div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Pack size selector -->
+    <p class="sel-label">Elegí tu pack</p>
+    <div class="pack-opts">
+      <div class="pack-opt active" data-pack="4" onclick="selectPack(this, '4', '$7.380', '$8.200', '$1.845', '$2.050')">
+        <div class="pack-check">✓</div>
+        <div class="p-qty">× 4</div>
+        <div class="p-price">$2.050<span class="p-unit"> /lata</span></div>
+        <div class="p-total">Total $8.200</div>
+      </div>
+      <div class="pack-opt" data-pack="12" onclick="selectPack(this, '12', '$19.926', '$22.140', '$1.661', '$1.845')">
+        <div class="p-badge">Popular</div>
+        <div class="pack-check">✓</div>
+        <div class="p-qty">× 12</div>
+        <div class="p-price">$1.845<span class="p-unit"> /lata</span></div>
+        <div class="p-disc">Ahorrás 10%</div>
+        <div class="p-total">Total $22.140</div>
+      </div>
+      <div class="pack-opt" data-pack="24" onclick="selectPack(this, '24', '$35.424', '$39.360', '$1.476', '$1.640')">
+        <div class="p-badge p-badge-best">Mejor precio</div>
+        <div class="pack-check">✓</div>
+        <div class="p-qty">× 24</div>
+        <div class="p-price">$1.640<span class="p-unit"> /lata</span></div>
+        <div class="p-disc">Ahorrás 20%</div>
+        <div class="p-total">Total $39.360</div>
+      </div>
+    </div>
+
+    <!-- ── Subscribe vs One-Time (Huel style) ── -->
+    <div class="purch-wrap">
+      <div class="purch-popular">⭐ MÁS POPULAR</div>
+      <div class="purch-opt active popular" id="purchSub" onclick="selectPurch('sub')">
+        <div class="purch-opt-row">
+          <div class="radio-dot"></div>
+          <div class="purch-opt-info">
+            <div class="purch-opt-title">Suscribite y ahorrá</div>
+            <div class="purch-opt-price"><span id="subPrice">$7.380</span> <span class="strike" id="subStrike">$8.200</span></div>
+            <div class="purch-opt-per"><span id="subPer">$1.845</span> por lata · 10% de descuento</div>
+          </div>
+          <div class="purch-opt-pack" id="packLabel">Pack × 4</div>
+        </div>
+        <div class="sub-details">
+          <div class="sub-how-title">Cómo funciona la suscripción</div>
+          <div class="sub-benefits">
+            <div><span class="chk">✓</span> 10% de descuento en cada pedido recurrente</div>
+            <div><span class="chk">✓</span> Pausá o reprogramá cuando quieras</div>
+            <div><span class="chk">✓</span> Cancelá en cualquier momento — sin cargos</div>
+          </div>
+          <div class="freq-row">
+            <span>Recibís cada</span>
+            <select class="freq-sel">
+              <option>2 semanas</option>
+              <option selected>4 semanas</option>
+              <option>6 semanas</option>
+              <option>8 semanas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="purch-opt" id="purchOne" onclick="selectPurch('one')">
+        <div class="purch-opt-row">
+          <div class="radio-dot"></div>
+          <div class="purch-opt-info">
+            <div class="purch-opt-title">Compra única</div>
+            <div class="purch-opt-price"><span id="onePrice">$8.200</span></div>
+            <div class="purch-opt-per"><span id="onePer">$2.050</span> por lata</div>
+          </div>
+          <div class="purch-opt-pack" id="packLabelOne">Pack × 4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <button class="btn-cta" onclick="addToCart()">Comprar ahora</button>
+
+    <!-- Pago seguro -->
+    <div class="mp-payment-block">
+      <div class="mp-secure-row">
+        <span>Pago seguro con Mercado Pago</span>
+        <img src="Pago%20Seguro/Icono%20MP.webp" alt="Mercado Pago" />
+      </div>
+      <img src="Pago%20Seguro/Tarjetas%20Disponibles.avif" alt="Tarjetas disponibles" class="mp-cards" />
+    </div>
+
+    <!-- Voodoo strip -->
+    <div class="voodoo-strip">
+      <img src="Voodoo/Voodoo.png" alt="Muñeco Voodoo Sh!" class="voodoo-strip-img" />
+      <div class="voodoo-strip-text">
+        <strong>Voodoo de regalo</strong>
+        <span>en tu primera compra</span>
+      </div>
+    </div>
+
+    <!-- Info accordions -->
+    <div class="info-accords">
+      <div class="info-accord" id="ia1">
+        <div class="info-accord-q" onclick="toggleInfoAccord('ia1')">
+          <span>Ingredientes y certificaciones</span>
+          <span class="info-accord-ico">▾</span>
+        </div>
+        <div class="info-accord-body">
+          Sh! está aprobada por ANMAT, sin colorantes artificiales y elaborada en Argentina. Cafeína (80mg), Taurina (1000mg), Glucuronolactona, Inositol y vitaminas B3, B5, B6 y B12 en dosis respaldadas por la evidencia.
+        </div>
+      </div>
+      <div class="info-accord" id="ia2">
+        <div class="info-accord-q" onclick="toggleInfoAccord('ia2')">
+          <span>Cómo funciona la suscripción</span>
+          <span class="info-accord-ico">▾</span>
+        </div>
+        <div class="info-accord-body">
+          Elegís la frecuencia (2, 4, 6 u 8 semanas) y te mandamos el pack automáticamente. Podés pausar, cambiar la frecuencia o cancelar desde tu cuenta en cualquier momento, sin penalizaciones ni cargos extra.
+        </div>
+      </div>
+      <div class="info-accord" id="ia3">
+        <div class="info-accord-q" onclick="toggleInfoAccord('ia3')">
+          <span>Envíos y devoluciones</span>
+          <span class="info-accord-ico">▾</span>
+        </div>
+        <div class="info-accord-body">
+          Entregamos en todo el país en 24–48hs hábiles. Envío gratis en pedidos +$15.000. Si el producto llega en mal estado o no te convence, te lo cambiamos o te devolvemos la plata. Sin vueltas.
+        </div>
+      </div>
+    </div>
+
+    <!-- Guarantee icons -->
+    <div class="guarantee-row">
+      <div class="guarantee-item">
+        <img src="Sellos%20Garantias/ANMAT.svg" alt="ANMAT" class="guarantee-svg" />
+        <span>ANMAT</span>
+      </div>
+      <div class="guarantee-item">
+        <img src="Sellos%20Garantias/Sin%20colorante.svg" alt="Sin colorantes" class="guarantee-svg" />
+        <span>Sin colorantes</span>
+      </div>
+      <div class="guarantee-item">
+        <img src="Sellos%20Garantias/Garantia.svg" alt="Garantía" class="guarantee-svg" />
+        <span>Garantía</span>
+      </div>
+      <div class="guarantee-item">
+        <img src="Sellos%20Garantias/Envio%20gratis.svg" alt="Envío gratis" class="guarantee-svg" />
+        <span>Envío gratis</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ═══ UGC + PRESS ══════════════════════════════════ -->
+<section class="ugc-section">
+  <div class="ugc-section-inner">
+    <div class="ugc-head">
+      <h2>Viral en las redes 🔥</h2>
+      <p>La gente lo muestra sin que nadie se los pida.</p>
+    </div>
+    <div class="ugc-grid">
+      <div class="ugc-card">
+        <video autoplay muted loop playsinline style="width:100%;height:400px;object-fit:cover;display:block;">
+          <source src="Videos%20UGC/shhhhhh.arg_DZGQD9BvjXx.mp4" type="video/mp4">
+        </video>
+        <div class="ugc-overlay">
+          <div class="ugc-user">@shhhhhh.arg</div>
+          <div class="ugc-caption">Reels · 1.2M vistas</div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <video autoplay muted loop playsinline style="width:100%;height:400px;object-fit:cover;display:block;">
+          <source src="Videos%20UGC/shhhhhh.arg_DZISnBuuWih.mp4" type="video/mp4">
+        </video>
+        <div class="ugc-overlay">
+          <div class="ugc-user">@shhhhhh.arg</div>
+          <div class="ugc-caption">TikTok · 890K vistas</div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <video autoplay muted loop playsinline style="width:100%;height:400px;object-fit:cover;display:block;">
+          <source src="Videos%20UGC/shhhhhh.arg_DZLbxNiPPMc.mp4" type="video/mp4">
+        </video>
+        <div class="ugc-overlay">
+          <div class="ugc-user">@shhhhhh.arg</div>
+          <div class="ugc-caption">Reels · 2.1M vistas</div>
+        </div>
+      </div>
+      <div class="ugc-card">
+        <video autoplay muted loop playsinline style="width:100%;height:400px;object-fit:cover;display:block;">
+          <source src="Videos%20UGC/shhhhhh.arg_DZV8tm_uw06.mp4" type="video/mp4">
+        </video>
+        <div class="ugc-overlay">
+          <div class="ugc-user">@shhhhhh.arg</div>
+          <div class="ugc-caption">TikTok · 1.3M vistas</div>
+        </div>
+      </div>
+    </div>
+    <div class="press-mini">
+      <p class="press-mini-lbl">Como visto en</p>
+      <div class="press-mini-logos">
+        <span class="press-mini-logo">Infobae</span>
+        <span class="press-mini-logo">Clarín</span>
+        <span class="press-mini-logo">La Nación</span>
+        <span class="press-mini-logo">Rolling Stone</span>
+        <span class="press-mini-logo">Ohlalá</span>
+        <span class="press-mini-logo">Vogue Arg.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DARK BENEFITS ════════════════════════════════ -->
+<section class="benefits-dark-section">
+  <div class="benefits-dark-inner">
+    <h2 class="benefits-dark-title">Esta es la<br><em>energía real.</em></h2>
+    <div class="benefits-3col">
+      <!-- Columna izquierda -->
+      <div class="benefits-col">
+        <div class="bstat">
+          <div class="bstat-num">80mg</div>
+          <div class="bstat-title">Cafeína exacta</div>
+          <div class="bstat-desc">Activa tu sistema nervioso en minutos, sin excesos ni bajones.</div>
+        </div>
+        <div class="bstat">
+          <div class="bstat-num">100%</div>
+          <div class="bstat-title">Natural</div>
+          <div class="bstat-desc">Cafeína, ginseng, jalea real y miel. Nada artificial.</div>
+        </div>
+        <div class="bstat">
+          <div class="bstat-num">0</div>
+          <div class="bstat-title">Colorantes artificiales</div>
+          <div class="bstat-desc">Lo que necesitás en la dosis exacta. Nada más, nada menos.</div>
+        </div>
+      </div>
+      <!-- Centro: lata Sh! -->
+      <div class="benefits-center">
+        <img src="Energia%20Real/Lata%20SH.png" alt="Sh! Energy Drink" />
+      </div>
+      <!-- Columna derecha -->
+      <div class="benefits-col benefits-col-right">
+        <div class="bstat">
+          <div class="bstat-num">Foco</div>
+          <div class="bstat-title">Sin dispersión</div>
+          <div class="bstat-desc">Cafeína calibrada para sostener la atención sin nerviosismo.</div>
+        </div>
+        <div class="bstat">
+          <div class="bstat-num">ANMAT</div>
+          <div class="bstat-title">Certificado</div>
+          <div class="bstat-desc">Aprobado y registrado. Calidad garantizada desde la primera lata.</div>
+        </div>
+        <div class="bstat">
+          <div class="bstat-num">Argentina</div>
+          <div class="bstat-title">Hecho acá</div>
+          <div class="bstat-desc">Producido y distribuido en el país, con estándares locales.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ══════════════════════════════════════ -->
+<section class="features-section">
+  <div class="features-inner">
+    <div class="features-left">
+      <div class="features-content">
+        <div class="sec-label">Por qué Sh!</div>
+        <h2 class="sec-title">Formulado con ingredientes<br>que funcionan.</h2>
+        <div class="features-list">
+          <div class="feat-item">
+            <h3>Energía real, sin bajones</h3>
+            <p>Cafeína y miel en dosis exactas generan una activación que dura. Sin el pico abrupto ni la caída de las energizantes comunes.</p>
+          </div>
+          <div class="feat-item">
+            <h3>Adaptación al estrés</h3>
+            <p>El Ginseng actúa como adaptógeno natural: ayuda al organismo a rendir más en momentos de alta demanda física y mental.</p>
+          </div>
+          <div class="feat-item">
+            <h3>Vitalidad desde adentro</h3>
+            <p>La Jalea Real aporta aminoácidos esenciales, ácidos grasos únicos y micronutrientes que refuerzan el bienestar general.</p>
+          </div>
+          <div class="feat-item">
+            <h3>Motor celular activo</h3>
+            <p>El Complejo B (B3, B5, B6, B12) activa el metabolismo energético en cada célula y sostiene el sistema nervioso.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="features-right">
+      <img src="Energia%20Real/Energia%20Real.webp" alt="Sh! Energy Drink — ingredientes" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INGREDIENTS CAROUSEL ══════════════════════════ -->
+<section class="ingr-carousel-section">
+  <div class="ingr-carousel-inner">
+    <div class="ingr-carousel-header">
+      <div class="ingr-carousel-hd-left">
+        <h2>Ingredientes<br><em>respaldados por la ciencia</em></h2>
+      </div>
+      <div class="ingr-arrows">
+        <button class="ingr-arrow-btn" onclick="scrollIngr(-1)" aria-label="Anterior">←</button>
+        <button class="ingr-arrow-btn" onclick="scrollIngr(1)" aria-label="Siguiente">→</button>
+      </div>
+    </div>
+    <div class="ingr-track" id="ingrTrack">
+      <div class="ingr-item">
+        <div class="ingr-oval">
+          <img src="Ingredientes/cafeina.png" alt="Cafeína" />
+        </div>
+        <h4>Cafeína · 80mg</h4>
+        <p>Activa el sistema nervioso central en minutos. Mejora el estado de alerta y el foco, y reduce la fatiga percibida sin excesos.</p>
+      </div>
+      <div class="ingr-item">
+        <div class="ingr-oval">
+          <img src="Ingredientes/Ginseng.png" alt="Ginseng" />
+        </div>
+        <h4>Ginseng</h4>
+        <p>Adaptógeno natural que ayuda al organismo a manejar el estrés físico y mental. Energía equilibrada y sostenida, sin nerviosismo.</p>
+      </div>
+      <div class="ingr-item">
+        <div class="ingr-oval">
+          <img src="Ingredientes/Jalea%20Real.png" alt="Jalea Real" />
+        </div>
+        <h4>Jalea Real</h4>
+        <p>Superalimento rico en aminoácidos, vitaminas y ácidos grasos únicos. Refuerza la vitalidad y el sistema inmune desde adentro.</p>
+      </div>
+      <div class="ingr-item">
+        <div class="ingr-oval">
+          <img src="Ingredientes/Miel.png" alt="Miel natural" />
+        </div>
+        <h4>Miel natural</h4>
+        <p>Fuente de carbohidratos de absorción progresiva. Aporta energía sin los picos glucémicos del azúcar refinada. Pura y sin procesar.</p>
+      </div>
+      <div class="ingr-item">
+        <div class="ingr-oval">
+          <img src="Ingredientes/Vitamina%20B.png" alt="Complejo B" />
+        </div>
+        <h4>Complejo Vitamínico B</h4>
+        <p>B3, B5, B6 y B12 trabajan en conjunto para el metabolismo energético celular y el buen funcionamiento del sistema nervioso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARISON JAVVY STYLE ════════════════════════ -->
+<section class="compare-javvy">
+  <div class="compare-javvy-inner">
+    <h2 class="cj-title">Con Sh! conseguís <span>más, por menos</span></h2>
+    <div class="cj-table">
+      <div class="cj-header">
+        <div class="cj-th-label"></div>
+        <div class="cj-th-grey">
+          <img src="Energia%20Real/Lata%20aburrida.png" alt="Importada" />
+          Importada<br><span style="font-size:11px;font-weight:400;">$3.200 / lata</span>
+        </div>
+        <div class="cj-th-sh">
+          <img src="Energia%20Real/Lata%20SH.png" alt="Sh!" />
+          Sh!<br><span style="font-size:11px;font-weight:400;">$2.050 / lata</span>
+        </div>
+        <div class="cj-th-grey">
+          <img src="Energia%20Real/Lata%20aburrida.png" alt="Del kiosco" />
+          Del kiosco<br><span style="font-size:11px;font-weight:400;">$1.800 / lata</span>
+        </div>
+      </div>
+      <div class="cj-table-row">
+        <div class="cj-td-label">Cafeína</div>
+        <div class="cj-td-bad">✗ 70–80mg</div>
+        <div class="cj-td-sh cj-td-good">✓ 80mg exactos</div>
+        <div class="cj-td-bad">✗ Variable</div>
+      </div>
+      <div class="cj-table-row">
+        <div class="cj-td-label">Colorantes</div>
+        <div class="cj-td-bad">✗ Tienen</div>
+        <div class="cj-td-sh cj-td-good">✓ Ninguno</div>
+        <div class="cj-td-bad">✗ Tienen</div>
+      </div>
+      <div class="cj-table-row">
+        <div class="cj-td-label">Complejo B</div>
+        <div class="cj-td-bad">✗ Parcial</div>
+        <div class="cj-td-sh cj-td-good">✓ B3·B5·B6·B12</div>
+        <div class="cj-td-bad">✗ No</div>
+      </div>
+      <div class="cj-table-row">
+        <div class="cj-td-label">Hecho en Argentina</div>
+        <div class="cj-td-bad">✗ No</div>
+        <div class="cj-td-sh cj-td-good">✓ ANMAT</div>
+        <div class="cj-td-bad">✗ A veces</div>
+      </div>
+      <div class="cj-table-row">
+        <div class="cj-td-label">Ingredientes nat.</div>
+        <div class="cj-td-bad">✗ No</div>
+        <div class="cj-td-sh cj-td-good">✓ Ginseng·Miel</div>
+        <div class="cj-td-bad">✗ No</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DARK PRESS + INFLUENCER ════════════════════════ -->
+<section class="press-dark-section">
+  <div class="press-dark-inner">
+    <p class="media-section-lbl">Lo dicen los medios</p>
+    <div class="media-cards">
+      <div class="media-card">
+        <div class="media-card-name">Infobae</div>
+        <blockquote>"Sh! llegó para romper el molde. Una marca que habla en el idioma de los argentinos: sin pretensiones, con actitud."</blockquote>
+      </div>
+      <div class="media-card">
+        <div class="media-card-name">Clarín</div>
+        <blockquote>"La disruptora del mercado de bebidas energizantes locales. En tiempo récord conquistó más de 3.000 puntos de venta en todo el país."</blockquote>
+      </div>
+      <div class="media-card">
+        <div class="media-card-name">Rolling Stone</div>
+        <blockquote>"'Energía para ser vos' no es solo una frase de marketing. Es una declaración de principios en un mercado de promesas vacías."</blockquote>
+      </div>
+    </div>
+    <div class="influencer-head">
+      <h2>Lo eligen <em>los que van en serio</em></h2>
+      <p>Desde el campo de juego hasta la pantalla. Los referentes que eligen Sh! todos los días.</p>
+    </div>
+    <div class="influencer-track" id="infTrack">
+      <div class="inf-card inf-featured">
+        <div class="inf-img-ph">
+          <img src="Referentes/Lionel%20Messi%20Testimonio.jfif" alt="Lionel Messi" />
+        </div>
+        <div class="inf-body">
+          <div class="inf-name">Lionel Messi <span class="inf-verify">✓</span></div>
+          <div class="inf-role">Campeón del Mundo 2022 · Inter Miami · El mejor de todos los tiempos</div>
+          <div class="inf-quote">"Sh! es energía sin vueltas. Lo que necesitás antes de dar todo en la cancha."</div>
+        </div>
+      </div>
+      <div class="inf-card">
+        <div class="inf-img-ph">
+          <img src="Referentes/David%20Guetta%20Sh!.jfif" alt="David Guetta" />
+        </div>
+        <div class="inf-body">
+          <div class="inf-name">David Guetta <span class="inf-verify">✓</span></div>
+          <div class="inf-role">DJ · Productor · 10M fans en Argentina</div>
+          <div class="inf-quote">"Cuando estás en el escenario necesitás algo real. Sh! no falla."</div>
+        </div>
+      </div>
+      <div class="inf-card">
+        <div class="inf-img-ph">
+          <img src="Referentes/Tim%20Payne%20SH.jfif" alt="Tim Payne" />
+        </div>
+        <div class="inf-body">
+          <div class="inf-name">Tim Payne <span class="inf-verify">✓</span></div>
+          <div class="inf-role">Atleta profesional · Embajador internacional Sh!</div>
+          <div class="inf-quote">"La diferencia la hace lo que metés adentro. Y Sh! tiene lo correcto."</div>
+        </div>
+      </div>
+      <div class="inf-card">
+        <div class="inf-img-ph">
+          <img src="Referentes/Maradona%20Testimonio.jfif" alt="Diego Maradona" />
+        </div>
+        <div class="inf-body">
+          <div class="inf-name">Diego Maradona <span class="inf-verify">✓</span></div>
+          <div class="inf-role">Leyenda · El Diego · Campeón del Mundo 1986</div>
+          <div class="inf-quote">"La energía pura no se explica. Se siente. Siempre con todo."</div>
+        </div>
+      </div>
+    </div>
+    <div class="influencer-nav">
+      <div class="inf-dots">
+        <button class="inf-dot active" aria-label="1"></button>
+        <button class="inf-dot" aria-label="2"></button>
+      </div>
+      <div class="inf-arrows">
+        <button class="inf-arrow-btn" onclick="scrollInf(-1)" aria-label="Anterior">←</button>
+        <button class="inf-arrow-btn" onclick="scrollInf(1)" aria-label="Siguiente">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVIEWS ═══════════════════════════════════ -->
+<section class="reviews-section">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <div class="overall-r">
+        <div class="overall-score">4.8</div>
+        <div class="overall-stars">
+          <div class="stars">★★★★★</div>
+          <p>Basado en 847 opiniones<br>verificadas</p>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; flex-direction:column; gap:8px; min-width:200px;">
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-muted);">
+            <span>5 ★</span>
+            <div style="flex:1; height:6px; background:var(--border); border-radius:100px; overflow:hidden;">
+              <div style="width:82%; height:100%; background:var(--gold); border-radius:100px;"></div>
+            </div>
+            <span>82%</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-muted);">
+            <span>4 ★</span>
+            <div style="flex:1; height:6px; background:var(--border); border-radius:100px; overflow:hidden;">
+              <div style="width:12%; height:100%; background:var(--gold); border-radius:100px; opacity:0.7;"></div>
+            </div>
+            <span>12%</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-muted);">
+            <span>3 ★</span>
+            <div style="flex:1; height:6px; background:var(--border); border-radius:100px; overflow:hidden;">
+              <div style="width:4%; height:100%; background:var(--gold); border-radius:100px; opacity:0.4;"></div>
+            </div>
+            <span>4%</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-muted);">
+            <span>2 ★</span>
+            <div style="flex:1; height:6px; background:var(--border); border-radius:100px; overflow:hidden;">
+              <div style="width:1%; height:100%; background:var(--gold); border-radius:100px; opacity:0.3;"></div>
+            </div>
+            <span>1%</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; font-size:13px; color:var(--text-muted);">
+            <span>1 ★</span>
+            <div style="flex:1; height:6px; background:var(--border); border-radius:100px; overflow:hidden;">
+              <div style="width:1%; height:100%; background:var(--gold); border-radius:100px; opacity:0.2;"></div>
+            </div>
+            <span>1%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <p class="r-text">"La mejor energizante argentina sin dudas. Tomé otras marcas internacionales y ésta no les pide nada. El sabor está muy bueno, no es empalagoso. Ya compré el pack x24 y no me arrepiento."</p>
+        <div class="r-author">
+          <div class="r-av" style="background:#e67e22;">TM</div>
+          <div>
+            <div class="r-name">Tomás M.</div>
+            <div class="r-date">Mayo 2026</div>
+            <div class="r-verified">✓ Compra verificada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <p class="r-text">"Antes tomaba Red Bull pero con Sh! me di cuenta que puedo tomar algo bueno y argentino. Lo que me convenció fue el slogan, que no me pida que cambie. Me sumé al equipo."</p>
+        <div class="r-author">
+          <div class="r-av" style="background:#27ae60;">SL</div>
+          <div>
+            <div class="r-name">Sol L.</div>
+            <div class="r-date">Abril 2026</div>
+            <div class="r-verified">✓ Compra verificada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="r-stars">★★★★★</div>
+        <p class="r-text">"Me la recomiendó mi entrenador y la verdad que sí se nota la diferencia en los entrenamientos. Nada del estómago revuelto que me daban otras. Cinco estrellas y a repetir."</p>
+        <div class="r-author">
+          <div class="r-av" style="background:#8e44ad;">NC</div>
+          <div>
+            <div class="r-name">Nicolás C.</div>
+            <div class="r-date">Junio 2026</div>
+            <div class="r-verified">✓ Compra verificada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="r-stars">★★★★☆</div>
+        <p class="r-text">"Muy buena. Energía sostenida sin el famoso 'bajón' de las otras marcas. Le saco una estrella porque quiero más sabores, pero la que hay está muy buena. Sigan así."</p>
+        <div class="r-author">
+          <div class="r-av" style="background:#e74c3c;">VR</div>
+          <div>
+            <div class="r-name">Valentina R.</div>
+            <div class="r-date">Junio 2026</div>
+            <div class="r-verified">✓ Compra verificada</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ════════════════════════════════════════ -->
+<section class="faq-section">
+  <div class="sec-header center" style="max-width:780px; margin:0 auto 52px;">
+    <div class="sec-label">Dudas frecuentes</div>
+    <h2 class="sec-title">Preguntas sin vueltas</h2>
+  </div>
+  <div class="faq-inner">
+
+    <div class="faq-item open">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Cuántas Sh! puedo tomar por día?</span>
+        <div class="faq-ico">+</div>
+      </div>
+      <div class="faq-a">Recomendamos no superar las 2 latas diarias. Cada lata tiene 80mg de cafeína, lo que dentro de los límites recomendados para adultos sanos (hasta 400mg/día según EFSA). Si sos sensible a la cafeína, empezá con una.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Es distinta a otras bebidas energizantes del mercado?</span>
+        <div class="faq-ico">+</div>
+      </div>
+      <div class="faq-a">Sí. Sh! nació con una filosofía diferente: no te pedimos que cambies. El formulado incluye vitaminas del complejo B de amplio espectro y está libre de colorantes artificiales. Además, es un producto argentino disponible en toda la cadena de supermercados y kioscos del país.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Puede tomarla alguien que hace deporte?</span>
+        <div class="faq-ico">+</div>
+      </div>
+      <div class="faq-a">Sí. La cafeína es un ergogénico reconocido que mejora la resistencia aeróbica, la fuerza muscular y la concentración. Tomala 20–30 minutos antes de tu entrenamiento para aprovechar sus beneficios. No está diseñada para reemplazar bebidas isotónicas durante el ejercicio intenso.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Qué es la taurina y para qué sirve?</span>
+        <div class="faq-ico">+</div>
+      </div>
+      <div class="faq-a">La taurina es un aminoácido que el cuerpo produce naturalmente. Contribuye al metabolismo energético, al correcto funcionamiento muscular y tiene propiedades antioxidantes. Su presencia en bebidas energizantes está ampliamente estudiada y es segura en las dosis habituales.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Hay restricciones para su consumo?</span>
+        <div class="faq-ico">+</div>
+      </div>
+      <div class="faq-a">No se recomienda su consumo durante el embarazo o la lactancia, ni para menores de 18 años. Si tomás medicación o tenés condiciones cardiovasculares, consultá con tu médico antes de consumirla. No mezclar con alcohol.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>¿Dónde la compro si no quiero esperar el envío?</span>
+        <div class="faq-ico">+</div>
+      </div>
+      <div class="faq-a">En más de 3.385 puntos de venta: Coto, Carrefour, Jumbo, Disco, los 1.079 locales YPF y las 251 sucursales Open 25. También disponible en Rappi y Pedidos Ya para entrega en menos de una hora. Usá el buscador de distribuidores en nuestra web para encontrar el más cercano.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ RELATED PRODUCTS ══════════════════════════ -->
+<section class="related-section">
+  <div class="sec-header" style="max-width:1200px; margin:0 auto 48px;">
+    <div class="sec-label">También te puede interesar</div>
+    <h2 class="sec-title">Más opciones Sh!</h2>
+  </div>
+  <div class="related-grid">
+    <div class="rel-card">
+      <div class="rel-img">
+        🥤
+        <div class="rel-badge">⚡ Más vendido</div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Pack × 4 latas Sh!</div>
+        <div class="rel-desc">Para empezar. Cuatro latas para llenar la heladera sin vueltas.</div>
+        <div class="rel-price">$8.200</div>
+        <button class="rel-btn">ME LO LLEVO</button>
+      </div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-img">
+        🥤🥤🥤🥤
+        <div class="rel-badge">Más popular</div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Pack × 24 latas Sh!</div>
+        <div class="rel-desc">Para los que van en serio. Heladera llena por semanas.</div>
+        <div class="rel-price">$49.200</div>
+        <button class="rel-btn">ME LO LLEVO</button>
+      </div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-img">
+        🥤🪆
+        <div class="rel-badge">Ed. especial</div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Pack × 24 + Muñeco Voodoo</div>
+        <div class="rel-desc">24 latas + un muñeco voodoo. Todo emocionalmente necesario.</div>
+        <div class="rel-price">$49.200</div>
+        <button class="rel-btn">ME LO LLEVO</button>
+      </div>
+    </div>
+
+    <div class="rel-card">
+      <div class="rel-img" style="background:linear-gradient(135deg, var(--dark-2), rgba(240,193,58,0.05));">
+        🎁
+        <div class="rel-badge" style="background:rgba(255,255,255,0.1); color:var(--text-muted); border-color:var(--border);">Próximamente</div>
+      </div>
+      <div class="rel-body">
+        <div class="rel-name">Voodoo Kit</div>
+        <div class="rel-desc">Un muñeco voodoo y algunas cositas más. Para cuando ya tenés la heladera llena.</div>
+        <div class="rel-price" style="color:var(--text-muted);">$100.000</div>
+        <button class="rel-btn" style="opacity:0.5; cursor:default;">Próximamente</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEWSLETTER ════════════════════════════════ -->
+<section class="newsletter">
+  <h2>Primero en saberlo. <span>Gratis.</span></h2>
+  <p>Novedades, ofertas exclusivas y todo lo que pase con Sh!. Sin spam. Prometido.</p>
+  <form class="nl-form" onsubmit="return false;">
+    <input class="nl-input" type="email" placeholder="tu@email.com" />
+    <button class="nl-btn" type="submit">Suscribirme</button>
+  </form>
+</section>
+
+<!-- ═══ MANIFESTO ═════════════════════════════════ -->
+<section class="manifesto">
+  <div class="manifesto-tag">Nuestro manifiesto</div>
+  <h2 class="manifesto-h1">No te<br>conviertas.</h2>
+  <p class="manifesto-p">Otros te piden que te transformes, que seas una versión mejorada, que cambies. Nosotros no. Sh! es energía para ser vos. Para hacer lo que hacés, pero con más fuerza.</p>
+  <button class="manifesto-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Quiero mi pack × 4</button>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <span class="footer-logo">Sh!</span>
+      <p class="footer-tagline">Energía para ser vos. Sin transformarte, sin cambiar. Solo vos con más fuerza.</p>
+      <div class="socials">
+        <a href="https://instagram.com/shhhhhh.arg" target="_blank" class="soc-btn" title="Instagram">📷</a>
+        <a href="#" class="soc-btn" title="TikTok">🎵</a>
+        <a href="#" class="soc-btn" title="YouTube">▶️</a>
+        <a href="#" class="soc-btn" title="Twitter/X">𝕏</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Productos</h4>
+      <ul class="footer-links">
+        <li><a href="#">Pack × 4 latas</a></li>
+        <li><a href="#">Pack × 24 latas</a></li>
+        <li><a href="#">Pack + Muñeco Voodoo</a></li>
+        <li><a href="#">Voodoo Kit (pronto)</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Nosotros</h4>
+      <ul class="footer-links">
+        <li><a href="#">¿Qué es Sh!?</a></li>
+        <li><a href="#">Nuestros ingredientes</a></li>
+        <li><a href="#">Sustentabilidad</a></li>
+        <li><a href="#">Rodrigo de Paul</a></li>
+        <li><a href="#">Prensa</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Ayuda</h4>
+      <ul class="footer-links">
+        <li><a href="#">Preguntas frecuentes</a></li>
+        <li><a href="#">Dónde comprar</a></li>
+        <li><a href="#">Envíos y devoluciones</a></li>
+        <li><a href="#">Distribuidores</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-legal">© 2026 Shhhhhh! Energy Drink — Todos los derechos reservados</p>
+    <div class="payment-row">
+      <span class="pay-badge">Visa</span>
+      <span class="pay-badge">Mastercard</span>
+      <span class="pay-badge">Mercado Pago</span>
+      <span class="pay-badge">Rappi Pay</span>
+      <span class="pay-badge">Efectivo</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ JAVASCRIPT ════════════════════════════════ -->
+<script>
+  /* ── Gallery ── */
+  const thumbs = document.querySelectorAll('.g-thumb');
+  const galleryImages = document.querySelectorAll('#galleryMain > img');
+  const galleryVideo = document.getElementById('galleryItem0');
+
+  thumbs.forEach(t => {
+    t.addEventListener('click', () => {
+      const idx = parseInt(t.dataset.idx);
+      thumbs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+
+      galleryImages.forEach(img => { img.classList.remove('active'); img.style.display = 'none'; });
+      if (galleryVideo) { galleryVideo.classList.remove('active'); galleryVideo.style.display = 'none'; }
+
+      if (idx === 0) {
+        if (galleryVideo) { galleryVideo.style.display = 'block'; galleryVideo.classList.add('active'); }
+      } else {
+        const target = document.getElementById('galleryItem' + idx);
+        if (target) { target.style.display = 'block'; target.classList.add('active'); }
+      }
+    });
+  });
+
+  /* ── Tabs ── */
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanes.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── Pack selector ── */
+  const packOpts = document.querySelectorAll('.pack-opt');
+  let currentPackLabel = '4';
+
+  function selectPack(el, packLabel, subP, oneP, subPer, onePer) {
+    packOpts.forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    currentPackLabel = packLabel;
+    // Update subscribe option prices
+    document.getElementById('subPrice').textContent = subP;
+    document.getElementById('subStrike').textContent = oneP;
+    document.getElementById('subPer').textContent = subPer;
+    document.getElementById('onePrice').textContent = oneP;
+    document.getElementById('onePer').textContent = onePer;
+    const pl = document.getElementById('packLabel');
+    if (pl) pl.textContent = 'Pack × ' + packLabel;
+    const pl2 = document.getElementById('packLabelOne');
+    if (pl2) pl2.textContent = 'Pack × ' + packLabel;
+  }
+
+  /* ── Subscribe vs One-time ── */
+  function selectPurch(type) {
+    const sub = document.getElementById('purchSub');
+    const one = document.getElementById('purchOne');
+    if (type === 'sub') {
+      sub.classList.add('active');
+      one.classList.remove('active');
+    } else {
+      one.classList.add('active');
+      sub.classList.remove('active');
+    }
+  }
+
+/* ── Info accordions ── */
+  function toggleInfoAccord(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  /* ── FAQ ── */
+  function toggleFaq(el) {
+    el.parentElement.classList.toggle('open');
+  }
+
+  /* ── Ingredients carousel scroll ── */
+  function scrollIngr(dir) {
+    const track = document.getElementById('ingrTrack');
+    if (track) track.scrollBy({ left: dir * 250, behavior: 'smooth' });
+  }
+
+  /* ── Influencer carousel scroll ── */
+  function scrollInf(dir) {
+    const track = document.getElementById('infTrack');
+    if (track) track.scrollBy({ left: dir * 290, behavior: 'smooth' });
+  }
+
+  /* ── Add to cart ── */
+  function addToCart() {
+    const btn = document.querySelector('.btn-cta');
+    const original = btn.textContent;
+    btn.textContent = '✓ Agregado al carrito — vamos!';
+    btn.style.background = '#27ae60';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.style.background = '';
+    }, 2000);
+  }
+
+  /* ── Mobile nav ── */
+  document.getElementById('navHam').addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'fixed';
+      links.style.top = '68px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'var(--dark)';
+      links.style.padding = '24px 5%';
+      links.style.gap = '18px';
+      links.style.zIndex = '150';
+      links.style.borderBottom = '1px solid var(--border)';
+    }
+  });
+
+  /* ── Init gallery: show video first ── */
+  window.addEventListener('DOMContentLoaded', () => {
+    const vid = document.getElementById('galleryItem0');
+    if (vid) { vid.style.display = 'block'; vid.classList.add('active'); }
+    document.querySelectorAll('#galleryMain > img').forEach(img => { img.style.display = 'none'; img.classList.remove('active'); });
+  });
+</script>
+
+</body>
+</html>
