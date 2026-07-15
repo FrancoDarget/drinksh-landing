@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Participantes — Sorteo Torino 0KM SH!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">SH<span class="dot">!</span></div>
+  <nav class="nav-links">
+    <a class="nav-link" href="index.html">Inicio</a>
+    <a class="nav-link" href="como-funciona.html">Cómo funciona</a>
+    <a class="nav-link active" href="participantes.html">Participantes</a>
+    <a class="btn btn-ghost btn-sm" href="index.html#ingresar">Ingresar</a>
+  </nav>
+</header>
+
+<section class="info-hero">
+  <div class="pill"><span class="live-dot"></span> Actualizado en tiempo real</div>
+  <h1>Tabla de <span class="gold">participantes</span></h1>
+  <p>
+    Todas las chances acumuladas por tickets cargados hasta el momento. Son provisorias: el análisis y la
+    validación final de los tickets se hace antes del sorteo. Cuantas más latas de SH! compraste, más arriba
+    aparecés en la tabla y más chances tenés de ganarte el Torino 0KM.
+  </p>
+</section>
+
+<div class="admin-wrap" style="padding-top: 0;">
+  <div class="stat-grid" id="public-stats"></div>
+
+  <div id="podium-wrap"></div>
+
+  <div class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Ranking completo</h2>
+      <span class="car-desc">Ordenado por chances provisorias</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Participante</th>
+            <th>ID</th>
+            <th>Tickets</th>
+            <th>Latas</th>
+            <th>Chances</th>
+            <th>Probabilidad</th>
+          </tr>
+        </thead>
+        <tbody id="public-tbody"></tbody>
+      </table>
+      <div class="empty-state hidden" id="empty-state">
+        <div class="ei">🗒️</div>
+        Todavía no hay participantes cargados en el sorteo.
+      </div>
+    </div>
+    <p class="terms-line" id="eliminados-note" style="margin-top:16px;"></p>
+  </div>
+
+  <p class="terms-line" style="text-align:center; max-width:600px; margin:24px auto 0;">
+    Por privacidad, esta vista pública no muestra correos ni otros datos de contacto — solo nombre e ID de participante.
+    Podés ver tu propio ID <a href="index.html#ingresar" style="color: var(--gold);">ingresando con tu correo</a>.
+    Los participantes eliminados por fraude no se listan en esta tabla — ver <a href="como-funciona.html" style="color: var(--gold);">política antifraude</a>.
+  </p>
+
+  <div style="text-align:center; margin-top: 30px;">
+    <a href="index.html" class="btn btn-primary">Quiero sumar chances</a>
+  </div>
+</div>
+
+<footer class="demo-footer">
+  SH! Energy — Sorteo Torino 0KM <span class="demo-tag">Maqueta funcional / uso interno</span>
+  <a class="footer-admin-link" href="admin.html">Panel interno (equipo SH!)</a>
+</footer>
+
+<script src="app.js"></script>
+<script>
+(function () {
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function medal(rank) {
+    if (rank === 1) return '🥇';
+    if (rank === 2) return '🥈';
+    if (rank === 3) return '🥉';
+    return null;
+  }
+
+  function render() {
+    const stats = SH.getStats();
+    document.getElementById('public-stats').innerHTML = `
+      <div class="stat-card">
+        <div class="stat-label">Participantes activos</div>
+        <div class="stat-value">${stats.totalParticipantes}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Tickets cargados</div>
+        <div class="stat-value">${stats.totalTickets}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Latas totales</div>
+        <div class="stat-value">${stats.totalLatas}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Chances en juego</div>
+        <div class="stat-value">${stats.totalChances}</div>
+      </div>
+    `;
+
+    const all = SH.getParticipants();
+    const activos = all.filter((p) => !p.eliminado);
+    const eliminadosCount = all.length - activos.length;
+
+    document.getElementById('eliminados-note').textContent = eliminadosCount > 0
+      ? `${eliminadosCount} participante(s) fueron eliminados del sorteo por incumplir la política antifraude.`
+      : '';
+
+    const podiumWrap = document.getElementById('podium-wrap');
+    const top3 = activos.slice(0, 3);
+    if (top3.length > 0) {
+      podiumWrap.innerHTML = `
+        <div class="podium">
+          ${top3.map((p, i) => `
+            <div class="podium-card ${i === 0 ? 'rank-1' : ''}">
+              <div class="podium-medal">${medal(i + 1)}</div>
+              <div class="podium-name">${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</div>
+              <div style="margin-top:4px;"><span class="id-chip">${escapeHtml(p.publicId)}</span></div>
+              <div class="podium-chances">${p.totalChances} chance(s)</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } else {
+      podiumWrap.innerHTML = '';
+    }
+
+    const tbody = document.getElementById('public-tbody');
+    const emptyState = document.getElementById('empty-state');
+
+    if (activos.length === 0) {
+      tbody.innerHTML = '';
+      emptyState.classList.remove('hidden');
+      return;
+    }
+    emptyState.classList.add('hidden');
+
+    const totalChances = stats.totalChances || 1;
+
+    tbody.innerHTML = activos.map((p, idx) => {
+      const rank = idx + 1;
+      const prob = ((p.totalChances / totalChances) * 100).toFixed(1);
+      return `
+        <tr>
+          <td><span class="rank-badge ${rank <= 3 ? 'top' : ''}">${rank}</span></td>
+          <td>${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</td>
+          <td><span class="id-chip">${escapeHtml(p.publicId)}</span></td>
+          <td>${p.tickets.length}</td>
+          <td>${p.totalLatas}</td>
+          <td><span class="chances-pill">${p.totalChances}</span></td>
+          <td>${prob}%</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

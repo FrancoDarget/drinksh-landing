@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cómo funciona el sorteo — SH! Energy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">SH<span class="dot">!</span></div>
+  <nav class="nav-links">
+    <a class="nav-link" href="index.html">Inicio</a>
+    <a class="nav-link active" href="como-funciona.html">Cómo funciona</a>
+    <a class="nav-link" href="participantes.html">Participantes</a>
+    <a class="btn btn-ghost btn-sm" href="index.html#ingresar">Ingresar</a>
+  </nav>
+</header>
+
+<section class="info-hero">
+  <div class="pill"><span class="live-dot"></span> Sorteo Torino 0KM</div>
+  <h1>Cómo funciona el <span class="gold">sorteo</span></h1>
+  <p>
+    Todo lo que necesitás saber sobre cómo se suman chances, cómo se validan los tickets de compra
+    y qué pasa si el sistema detecta un intento de fraude.
+  </p>
+</section>
+
+<section class="section">
+  <div class="section-kicker">La mecánica</div>
+  <h2 class="section-title">De la compra a las chances</h2>
+  <p class="section-sub">Un circuito simple pensado para liquidar el stock del sabor anterior antes del relanzamiento.</p>
+
+  <div class="rule-list">
+    <div class="rule-item">
+      <div class="rule-icon">📝</div>
+      <div>
+        <h3>1. Te registrás una vez</h3>
+        <p>Con tu nombre, apellido y correo electrónico. Ese correo es tu identificador único dentro del sorteo: todas las chances que sumes, de todos tus tickets, se acumulan ahí.</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">🧾</div>
+      <div>
+        <h3>2. Subís la foto de tu ticket</h3>
+        <p>Por cada compra de SH!, subís una foto legible del ticket e indicás cuántas latas compraste. Podés cargar tantos tickets como compras hagas durante la promoción.</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">🎟️</div>
+      <div>
+        <h3>3. Sumás chances provisorias: 1 lata = 1 chance</h3>
+        <p>Si compraste 6 latas en un ticket, sumás 6 chances provisorias al instante. Cuantas más latas compres a lo largo de la promoción, más chances acumulás para ganarte el Torino 0KM.</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">🤖</div>
+      <div>
+        <h3>4. Antes del sorteo, el sistema analiza todos los tickets</h3>
+        <p>El análisis no ocurre al momento de subir la foto: se corre una sola vez, antes del sorteo, sobre el total de tickets cargados durante toda la promoción (ver el detalle más abajo). Ahí se confirman las chances definitivas de cada participante.</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">🏆</div>
+      <div>
+        <h3>5. Sorteo final ponderado por chances</h3>
+        <p>Con las chances ya confirmadas, se hace un sorteo entre todos los participantes activos. Cada chance acumulada es un número dentro del sorteo: a más chances, mayor probabilidad de salir sorteado — pero cualquier participante con al menos una chance puede ganar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 10px;">
+  <div class="section-kicker">Validación de tickets</div>
+  <h2 class="section-title">Qué revisa el sistema en cada ticket</h2>
+  <p class="section-sub">La validación es automática, pero no es instantánea: se ejecuta una vez, antes del sorteo, sobre todos los tickets cargados durante la promoción.</p>
+
+  <div class="rule-list">
+    <div class="rule-item">
+      <div class="rule-icon">🔍</div>
+      <div>
+        <h3>Legibilidad de la imagen</h3>
+        <p>Se verifica que la foto del ticket sea nítida y que se puedan identificar los datos clave (comercio, fecha, producto y cantidad).</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">🧬</div>
+      <div>
+        <h3>Coincidencia de datos</h3>
+        <p>Se contrasta que el ticket corresponda efectivamente a una compra de SH! y que la cantidad de latas declarada sea consistente con lo que figura en la imagen.</p>
+      </div>
+    </div>
+    <div class="rule-item">
+      <div class="rule-icon">📑</div>
+      <div>
+        <h3>Detección de duplicados</h3>
+        <p>El mismo ticket no puede cargarse dos veces, ni por la misma persona ni por personas distintas, para evitar que se dupliquen chances de forma indebida.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-demo-row" style="justify-content:center; margin-top:28px;">
+    <span class="status-badge pending">⏳ Pendiente de análisis (hasta el sorteo)</span>
+    <span class="status-badge ok">✓ Validado</span>
+    <span class="status-badge bad">✕ Rechazado</span>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+  <div class="fraud-panel">
+    <div class="fp-kicker">⚠ Política antifraude</div>
+    <h3>¿Qué pasa si se detecta un fraude?</h3>
+    <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
+      El sorteo depende de la confianza de todos los participantes. El análisis de fraude se corre una vez,
+      antes del sorteo, sobre todos los tickets cargados durante la promoción, y tiene consecuencias claras
+      y automáticas:
+    </p>
+    <ul>
+      <li><b>Ticket adulterado o editado:</b> el ticket se marca como rechazado y no suma chances.</li>
+      <li><b>Ticket duplicado:</b> solo la primera carga válida suma chances; las repeticiones se descartan.</li>
+      <li><b>Patrón de fraude confirmado:</b> el participante es <b>eliminado automáticamente del sorteo</b>, perdiendo la totalidad de las chances acumuladas hasta ese momento.</li>
+      <li><b>Transparencia:</b> las chances de todos los participantes activos se reflejan en la <a href="participantes.html" style="color: var(--gold);">tabla pública de participantes</a>.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 10px;">
+  <div class="section-kicker">Preguntas frecuentes</div>
+  <h2 class="section-title">FAQ</h2>
+
+  <div style="max-width: 760px; margin: 0 auto;">
+    <div class="faq-item">
+      <h4>¿Puedo cargar más de un ticket?</h4>
+      <p>Sí. Cada ticket suma chances a tu correo. No hay límite de tickets por participante.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Qué pasa si mi ticket es rechazado en el análisis?</h4>
+      <p>Perdés las chances provisorias de ese ticket, pero conservás las de tus otros tickets validados. El resultado del análisis se conoce antes del sorteo, no al momento de cargar el ticket.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Cómo sé cuántas chances tengo?</h4>
+      <p>Desde la página principal, con la opción "Ingresar" usando tu correo, o consultando la <a href="participantes.html" style="color: var(--gold);">tabla de participantes</a> con tu nombre y tu ID.</p>
+    </div>
+    <div class="faq-item">
+      <h4>¿Cómo se elige al ganador o ganadora?</h4>
+      <p>Al cierre de la promoción se realiza un sorteo ponderado: cada chance acumulada es una posibilidad dentro del sorteo. A más chances, mayor probabilidad, pero todo participante activo con al menos una chance puede resultar ganador.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top: 40px;">
+    <a href="index.html" class="btn btn-primary">Quiero participar</a>
+  </div>
+</section>
+
+<footer class="demo-footer">
+  SH! Energy — Sorteo Torino 0KM <span class="demo-tag">Maqueta funcional / uso interno</span>
+  <a class="footer-admin-link" href="admin.html">Panel interno (equipo SH!)</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SH! — Panel del Sorteo (interno)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">SH<span class="dot">!</span></div>
+  <nav class="nav-links">
+    <a class="nav-link" href="como-funciona.html">Cómo funciona</a>
+    <a class="nav-link" href="participantes.html">Participantes</a>
+    <span class="nav-sep"></span>
+    <a class="link-btn" href="index.html">← Volver al sitio del sorteo</a>
+  </nav>
+</header>
+
+<div class="admin-wrap">
+  <div class="admin-header">
+    <div>
+      <h1>Panel del sorteo</h1>
+      <p>Torino 0KM — vista interna para el equipo SH!. Datos guardados localmente en este navegador (demo).</p>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" id="btn-seed">Cargar datos de ejemplo</button>
+      <button class="btn btn-ghost btn-sm" id="btn-reset">Vaciar datos</button>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">Participantes únicos</div>
+      <div class="stat-value" id="stat-participantes">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Tickets cargados</div>
+      <div class="stat-value" id="stat-tickets">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Latas totales</div>
+      <div class="stat-value" id="stat-latas">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Chances en juego</div>
+      <div class="stat-value" id="stat-chances">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Eliminados por fraude</div>
+      <div class="stat-value" id="stat-eliminados" style="color: var(--bad);">0</div>
+    </div>
+  </div>
+
+  <div class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Sortear ganador</h2>
+      <span class="car-desc">Sorteo ponderado por chances acumuladas</span>
+    </div>
+    <div class="draw-stage">
+      <div class="draw-wheel-name" id="draw-name">—</div>
+      <div class="draw-wheel-sub" id="draw-sub">Presioná el botón para simular el sorteo del Torino 0KM.</div>
+      <div style="margin-top:20px;">
+        <button class="btn btn-primary" id="btn-draw">🎰 Realizar sorteo</button>
+      </div>
+      <div id="winner-banner-wrap"></div>
+    </div>
+  </div>
+
+  <div class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Participantes</h2>
+      <span class="car-desc" id="table-sub">Ordenados por chances totales · "Marcar como fraude" simula el análisis antifraude que se corre antes del sorteo</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Participante</th>
+            <th>Correo</th>
+            <th>Tickets</th>
+            <th>Latas</th>
+            <th>Chances</th>
+            <th>Último ticket</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="participants-tbody"></tbody>
+      </table>
+      <div class="empty-state hidden" id="empty-state">
+        <div class="ei">🗒️</div>
+        No hay participaciones cargadas todavía.<br/>
+        Probá el flujo de registro en la página principal, o cargá datos de ejemplo.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="ticket-modal">
+  <div class="modal-box">
+    <img id="ticket-modal-img" alt="Ticket" />
+    <div id="ticket-modal-info" class="wizard-desc" style="margin-bottom:10px;"></div>
+    <div class="modal-close">
+      <button class="btn btn-ghost btn-sm" id="ticket-modal-close">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="demo-footer">
+  SH! Energy — Sorteo Torino 0KM <span class="demo-tag">Maqueta funcional / uso interno</span>
+</footer>
+
+<script src="app.js"></script>
+<script>
+(function () {
+  const SEED_NAMES = [
+    ['Valentina', 'Ríos'], ['Bruno', 'Fernández'], ['Romina', 'Suárez'],
+    ['Tomás', 'Alegre'], ['Camila', 'Ibáñez'], ['Lautaro', 'Correa'],
+    ['Micaela', 'Paz'], ['Franco', 'Molina'],
+  ];
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+      ' ' + d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function placeholderTicketDataUrl(label) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400">
+      <rect width="300" height="400" fill="#F0C13A"/>
+      <rect x="24" y="30" width="252" height="340" fill="#FFFDF6" stroke="#C8970A" stroke-width="3"/>
+      <g fill="#C8970A">
+        <rect x="48" y="60" width="204" height="10"/>
+        <rect x="48" y="86" width="150" height="8"/>
+        <rect x="48" y="110" width="180" height="8"/>
+        <rect x="48" y="134" width="130" height="8"/>
+        <rect x="48" y="168" width="204" height="8"/>
+        <rect x="48" y="190" width="204" height="8"/>
+        <rect x="48" y="212" width="204" height="8"/>
+      </g>
+      <text x="150" y="290" fill="#1a1400" font-family="Arial" font-weight="bold" font-size="20" text-anchor="middle">🧾</text>
+      <text x="150" y="330" fill="#1a1400" font-family="Arial" font-weight="bold" font-size="15" text-anchor="middle">${label}</text>
+    </svg>`;
+    return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+  }
+
+  function seedData() {
+    SEED_NAMES.forEach(([nombre, apellido], i) => {
+      const tickets = 1 + (i % 3);
+      for (let t = 0; t < tickets; t++) {
+        SH.addEntry({
+          nombre,
+          apellido,
+          email: `${nombre}.${apellido}`.toLowerCase().replace(/\s+/g, '') + '@ejemplo.com',
+          latas: 1 + Math.floor(Math.random() * 8),
+          fotoDataUrl: placeholderTicketDataUrl('Ticket de ejemplo'),
+          fotoNombre: `ticket_ejemplo_${i}_${t}.jpg`,
+        });
+      }
+    });
+    render();
+    SH.showToast('Datos de ejemplo cargados.');
+  }
+
+  function render() {
+    const stats = SH.getStats();
+    document.getElementById('stat-participantes').textContent = stats.totalParticipantes;
+    document.getElementById('stat-tickets').textContent = stats.totalTickets;
+    document.getElementById('stat-latas').textContent = stats.totalLatas;
+    document.getElementById('stat-chances').textContent = stats.totalChances;
+    document.getElementById('stat-eliminados').textContent = stats.totalEliminados;
+
+    const participants = SH.getParticipants();
+    const tbody = document.getElementById('participants-tbody');
+    const emptyState = document.getElementById('empty-state');
+
+    if (participants.length === 0) {
+      tbody.innerHTML = '';
+      emptyState.classList.remove('hidden');
+      return;
+    }
+    emptyState.classList.add('hidden');
+
+    tbody.innerHTML = participants.map((p, idx) => {
+      const rank = idx + 1;
+      const lastTicket = p.tickets[p.tickets.length - 1];
+      const thumb = lastTicket && lastTicket.fotoDataUrl
+        ? `<img class="thumb-btn" src="${lastTicket.fotoDataUrl}" data-ticket-id="${lastTicket.id}" alt="Ticket" />`
+        : '—';
+      const estadoBadge = p.eliminado
+        ? `<span class="status-badge bad">✕ Eliminado</span>`
+        : `<span class="status-badge ok">✓ Activo</span>`;
+      const accionBtn = p.eliminado
+        ? `<button class="fraud-btn undo" data-email="${escapeHtml(p.email)}" data-action="unmark">Reincorporar</button>`
+        : `<button class="fraud-btn" data-email="${escapeHtml(p.email)}" data-action="mark">Marcar como fraude</button>`;
+      return `
+        <tr class="${p.eliminado ? 'row-eliminado' : ''}">
+          <td><span class="rank-badge ${rank <= 3 && !p.eliminado ? 'top' : ''}">${rank}</span></td>
+          <td>${escapeHtml(p.nombre)} ${escapeHtml(p.apellido)}</td>
+          <td>${escapeHtml(p.email)}<br/><span class="id-chip" style="margin-top:4px;">${escapeHtml(p.publicId)}</span></td>
+          <td>${p.tickets.length}</td>
+          <td>${p.totalLatas}</td>
+          <td><span class="chances-pill">${p.totalChances}</span></td>
+          <td>${thumb}</td>
+          <td>${estadoBadge}</td>
+          <td>${accionBtn}</td>
+        </tr>
+      `;
+    }).join('');
+
+    tbody.querySelectorAll('.thumb-btn').forEach((img) => {
+      img.addEventListener('click', () => {
+        const id = img.dataset.ticketId;
+        const entry = SH.loadEntries().find((e) => e.id === id);
+        if (!entry) return;
+        document.getElementById('ticket-modal-img').src = entry.fotoDataUrl;
+        document.getElementById('ticket-modal-info').innerHTML =
+          `<b>${escapeHtml(entry.nombre)} ${escapeHtml(entry.apellido)}</b> — ${entry.latas} lata(s) — ${fmtDate(entry.fecha)}`;
+        document.getElementById('ticket-modal').classList.remove('hidden');
+      });
+    });
+
+    tbody.querySelectorAll('.fraud-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const email = btn.dataset.email;
+        if (btn.dataset.action === 'mark') {
+          if (!confirm(`¿Marcar a ${email} como fraude? Se lo elimina del sorteo y pierde todas sus chances.`)) return;
+          SH.markFraude(email);
+          SH.showToast('Participante eliminado por fraude.');
+        } else {
+          SH.unmarkFraude(email);
+          SH.showToast('Participante reincorporado al sorteo.');
+        }
+        render();
+      });
+    });
+  }
+
+  document.getElementById('ticket-modal-close').addEventListener('click', () => {
+    document.getElementById('ticket-modal').classList.add('hidden');
+  });
+
+  document.getElementById('btn-seed').addEventListener('click', seedData);
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!confirm('¿Vaciar todas las participaciones cargadas en esta demo?')) return;
+    SH.clearAll();
+    document.getElementById('draw-name').textContent = '—';
+    document.getElementById('draw-sub').textContent = 'Presioná el botón para simular el sorteo del Torino 0KM.';
+    document.getElementById('winner-banner-wrap').innerHTML = '';
+    render();
+    SH.showToast('Datos vaciados.');
+  });
+
+  // ---- Sorteo ----
+  function launchConfetti() {
+    const colors = ['#F0C13A', '#F9D85C', '#C8970A', '#FFFFFF'];
+    for (let i = 0; i < 60; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animation = `confetti-fall ${2 + Math.random() * 1.5}s linear forwards`;
+      piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 3600);
+    }
+  }
+
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `
+    @keyframes confetti-fall {
+      to { transform: translateY(105vh) rotate(400deg); }
+    }
+  `;
+  document.head.appendChild(styleTag);
+
+  document.getElementById('btn-draw').addEventListener('click', () => {
+    const participants = SH.getParticipants().filter((p) => !p.eliminado && p.totalChances > 0);
+    const drawNameEl = document.getElementById('draw-name');
+    const drawSubEl = document.getElementById('draw-sub');
+    const bannerWrap = document.getElementById('winner-banner-wrap');
+    const btn = document.getElementById('btn-draw');
+
+    if (participants.length === 0) {
+      SH.showToast('No hay participantes con chances todavía.', true);
+      return;
+    }
+
+    btn.disabled = true;
+    bannerWrap.innerHTML = '';
+    drawSubEl.textContent = `Sorteando entre ${participants.length} participante(s) y ${SH.getStats().totalChances} chances...`;
+    drawNameEl.classList.add('spinning');
+
+    let ticks = 0;
+    const maxTicks = 22;
+    const interval = setInterval(() => {
+      const random = participants[Math.floor(Math.random() * participants.length)];
+      drawNameEl.textContent = `${random.nombre} ${random.apellido}`;
+      ticks++;
+      if (ticks >= maxTicks) {
+        clearInterval(interval);
+        const winner = SH.drawWinner();
+        drawNameEl.classList.remove('spinning');
+        drawNameEl.textContent = `${winner.nombre} ${winner.apellido}`;
+        drawSubEl.textContent = '¡Tenemos ganador o ganadora!';
+        bannerWrap.innerHTML = `
+          <div class="winner-banner">
+            <div class="wb-kicker">🏆 Ganador del Torino 0KM</div>
+            <div class="wb-name">${escapeHtml(winner.nombre)} ${escapeHtml(winner.apellido)}</div>
+            <div class="wb-meta">${escapeHtml(winner.email)} · ${winner.totalChances} chance(s) de ${SH.getStats().totalChances} en juego
+              (${((winner.totalChances / SH.getStats().totalChances) * 100).toFixed(1)}% de probabilidad)</div>
+          </div>
+        `;
+        launchConfetti();
+        btn.disabled = false;
+      }
+    }, 90);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

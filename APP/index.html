@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SH! Energy — Sorteo Torino 0KM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">SH<span class="dot">!</span></div>
+  <nav class="nav-links">
+    <a class="nav-link active" href="index.html">Inicio</a>
+    <a class="nav-link" href="como-funciona.html">Cómo funciona</a>
+    <a class="nav-link" href="participantes.html">Participantes</a>
+    <button class="btn btn-ghost btn-sm" id="btn-lookup">Ingresar</button>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <video class="hero-video-bg" src="assets/HEROVIDEO.mp4" poster="assets/hero-sh.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div class="hero-video-overlay"></div>
+
+  <div class="hero-content">
+    <div class="pill"><span class="live-dot"></span> Sorteo activo — nuevo sabor ya disponible</div>
+    <h1>GANATE UN <span class="gold">TORINO 0KM</span><br/>COMPRANDO SH!</h1>
+    <p class="hero-sub">
+      Por el lanzamiento de nuestro nuevo sabor, estamos liquidando stock del sabor anterior.
+      Comprá latas de SH!, subí tu ticket y sumá una chance por cada lata. Cuantas más
+      compres, más oportunidades tenés de ganar.
+    </p>
+    <div class="hero-cta-row">
+      <button class="btn btn-primary" id="btn-cta-start">Quiero participar</button>
+      <button class="btn btn-ghost" id="btn-cta-how">Cómo funciona</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CÓMO FUNCIONA ============ -->
+<section class="section" id="como-funciona">
+  <div class="section-kicker">Mecánica del sorteo</div>
+  <h2 class="section-title">3 pasos para sumar chances</h2>
+  <p class="section-sub">Simple, rápido, y pensado para liquidar el stock del sabor anterior antes del relanzamiento.</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <h3>Registrate</h3>
+      <p>Completá tu nombre, apellido y correo electrónico. Es tu identidad dentro del sorteo.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <h3>Subí tu ticket</h3>
+      <p>Sacale una foto al ticket de compra de SH! e indicá cuántas latas compraste.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <h3>Sumá chances</h3>
+      <p>Cada lata comprada equivale a 1 chance. Podés cargar más de un ticket para seguir sumando.</p>
+    </div>
+  </div>
+
+  <div class="chance-banner">
+    <div class="cb-text">
+      <b>Regla del sorteo:</b> 1 lata comprada = 1 chance. Si compraste 6 latas, tenés 6 chances.
+      Podés subir varios tickets a lo largo de la promoción — todas tus chances se acumulan a tu correo.
+      Antes del sorteo, un sistema automático analiza todos los tickets cargados para descartar fraudes.
+      <a href="como-funciona.html" style="color: var(--gold);">Ver cómo funciona la validación y la política antifraude →</a>
+    </div>
+    <button class="btn btn-primary btn-sm" id="btn-cta-banner">Cargar mi ticket</button>
+  </div>
+  <div style="text-align:center; margin-top:24px;">
+    <a href="participantes.html" class="link-btn">Ver tabla de participantes y chances →</a>
+  </div>
+</section>
+
+<!-- ============ WIZARD ============ -->
+<section class="wizard-wrap hidden" id="wizard-section">
+  <div class="wizard-card">
+
+    <div class="progress-track">
+      <div class="progress-seg active" data-seg="1"></div>
+      <div class="progress-seg" data-seg="2"></div>
+      <div class="progress-seg" data-seg="3"></div>
+      <div class="progress-seg" data-seg="4"></div>
+    </div>
+
+    <!-- Paso 1: datos -->
+    <form id="step-1" class="wizard-step">
+      <div class="wizard-step-label">Paso 1 de 4</div>
+      <h2 class="wizard-title">Tus datos</h2>
+      <p class="wizard-desc">Los vamos a usar para identificarte en el sorteo y avisarte si sos el ganador o ganadora.</p>
+
+      <div class="field-row">
+        <div class="field" id="field-nombre">
+          <label for="inp-nombre">Nombre</label>
+          <input type="text" id="inp-nombre" placeholder="Ej: Valentina" autocomplete="given-name" />
+          <div class="field-error">Ingresá tu nombre.</div>
+        </div>
+        <div class="field" id="field-apellido">
+          <label for="inp-apellido">Apellido</label>
+          <input type="text" id="inp-apellido" placeholder="Ej: Gómez" autocomplete="family-name" />
+          <div class="field-error">Ingresá tu apellido.</div>
+        </div>
+      </div>
+
+      <div class="field" id="field-email">
+        <label for="inp-email">Correo electrónico</label>
+        <input type="email" id="inp-email" placeholder="tu@email.com" autocomplete="email" />
+        <div class="field-error">Ingresá un correo electrónico válido.</div>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="submit" class="btn btn-primary btn-block">Continuar</button>
+      </div>
+    </form>
+
+    <!-- Paso 2: ticket -->
+    <form id="step-2" class="wizard-step hidden">
+      <div class="wizard-step-label">Paso 2 de 4</div>
+      <h2 class="wizard-title">Tu ticket de compra</h2>
+      <p class="wizard-desc">Subí una foto legible del ticket y contanos cuántas latas de SH! compraste en esa compra.</p>
+
+      <div class="field" id="field-foto">
+        <label>Foto del ticket</label>
+        <label class="upload-box" id="upload-box">
+          <input type="file" id="inp-foto" accept="image/*" />
+          <div class="upload-icon">📎</div>
+          <div class="upload-text"><b>Hacé clic</b> o arrastrá una imagen del ticket</div>
+        </label>
+        <div class="upload-preview hidden" id="upload-preview">
+          <img id="upload-preview-img" alt="Ticket subido" />
+          <div class="upf-name" id="upload-preview-name"></div>
+          <button type="button" class="upf-remove" id="upload-remove">✕</button>
+        </div>
+        <div class="field-error">Subí una foto del ticket para continuar.</div>
+      </div>
+
+      <div class="field" id="field-latas">
+        <label for="inp-latas">¿Cuántas latas compraste?</label>
+        <div class="qty-control">
+          <button type="button" class="qty-btn" id="qty-minus">−</button>
+          <input type="number" id="inp-latas" min="1" step="1" value="1" />
+          <button type="button" class="qty-btn" id="qty-plus">+</button>
+        </div>
+        <div class="field-error">Ingresá una cantidad válida (mínimo 1).</div>
+      </div>
+
+      <div class="live-chance">
+        <div class="lc-label">Chances que sumás con este ticket</div>
+        <div class="lc-value" id="live-chance-value">1</div>
+      </div>
+
+      <div class="wizard-actions">
+        <button type="button" class="btn btn-ghost" id="btn-back-1">Atrás</button>
+        <button type="submit" class="btn btn-primary btn-block">Continuar</button>
+      </div>
+    </form>
+
+    <!-- Paso 3: guardado -->
+    <div class="wizard-step hidden" id="step-2b">
+      <div class="wizard-step-label">Paso 3 de 4</div>
+      <h2 class="wizard-title">Guardando tu ticket</h2>
+      <p class="wizard-desc">El análisis y la validación de los tickets se hacen antes del sorteo, sobre el total de participaciones cargadas — por ahora solo guardamos tu ticket y tus chances quedan provisorias.</p>
+      <div class="validating-wrap">
+        <div class="spinner"></div>
+        <div class="validating-steps">
+          <div class="vstep" data-vstep="1"><span class="vs-dot">1</span> Guardando la foto del ticket</div>
+          <div class="vstep" data-vstep="2"><span class="vs-dot">2</span> Registrando la cantidad de latas</div>
+          <div class="vstep" data-vstep="3"><span class="vs-dot">3</span> Sumando chances provisorias</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: confirmación -->
+    <div class="wizard-step hidden" id="step-3">
+      <div class="wizard-step-label">Paso 4 de 4</div>
+      <div class="success-wrap">
+        <div class="success-icon">🎉</div>
+        <h2 class="wizard-title">¡Listo, ya estás participando!</h2>
+        <p class="wizard-desc" id="step3-desc">Guardamos tu ticket y sumamos tus chances para el sorteo del Torino 0KM.</p>
+
+        <div class="chance-big" id="chance-big-value">1</div>
+        <div class="chance-big-label">chances provisorias acumuladas</div>
+
+        <div class="summary-box" id="summary-box"></div>
+
+        <div class="wizard-actions">
+          <button class="btn btn-ghost btn-block" id="btn-add-another">Cargar otro ticket</button>
+          <button class="btn btn-primary btn-block" id="btn-finish">Listo</button>
+        </div>
+        <p class="terms-line">
+          Demo funcional para revisión interna del equipo SH!. En producción, el análisis de tickets
+          (legibilidad, duplicados, antifraude) se ejecuta antes del sorteo sobre el total de participaciones
+          cargadas, no al momento de subir cada ticket.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ LOOKUP MODAL ============ -->
+<div class="modal-overlay hidden" id="lookup-modal">
+  <div class="modal-box">
+    <h2 class="wizard-title">Ingresar</h2>
+    <p class="wizard-desc">Ingresá el correo con el que te registraste para ver tus chances y tu ID de participante.</p>
+    <div class="field" id="field-lookup-email">
+      <input type="email" id="inp-lookup-email" placeholder="tu@email.com" />
+      <div class="field-error">Ingresá un correo válido.</div>
+    </div>
+    <button class="btn btn-primary btn-block" id="btn-lookup-search">Buscar</button>
+    <div class="lookup-result" id="lookup-result"></div>
+    <div class="modal-close">
+      <button class="btn btn-ghost btn-sm" id="btn-lookup-close">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TICKET PREVIEW MODAL ============ -->
+<div class="modal-overlay hidden" id="ticket-preview-modal">
+  <div class="modal-box">
+    <img id="ticket-preview-img" alt="Ticket" />
+    <div id="ticket-preview-info" class="wizard-desc" style="margin-bottom:10px;"></div>
+    <div class="modal-close">
+      <button class="btn btn-ghost btn-sm" id="ticket-preview-close">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="demo-footer">
+  SH! Energy — Sorteo Torino 0KM <span class="demo-tag">Maqueta funcional / uso interno</span>
+  <a class="footer-admin-link" href="admin.html">Panel interno (equipo SH!)</a>
+</footer>
+
+<script src="app.js"></script>
+<script>
+(function () {
+  const wizardSection = document.getElementById('wizard-section');
+  const step1 = document.getElementById('step-1');
+  const step2 = document.getElementById('step-2');
+  const step2b = document.getElementById('step-2b');
+  const step3 = document.getElementById('step-3');
+  const wizardSteps = [step1, step2, step2b, step3];
+  const segs = document.querySelectorAll('.progress-seg');
+
+  let draft = { nombre: '', apellido: '', email: '', latas: 1, fotoDataUrl: null, fotoNombre: null };
+
+  function scrollToWizard() {
+    wizardSection.classList.remove('hidden');
+    wizardSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.getElementById('btn-cta-start').addEventListener('click', scrollToWizard);
+  document.getElementById('btn-cta-banner').addEventListener('click', scrollToWizard);
+  document.getElementById('btn-cta-how').addEventListener('click', () => {
+    document.getElementById('como-funciona').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  function goToStep(n) {
+    wizardSteps.forEach((el, i) => el.classList.toggle('hidden', i !== n - 1));
+    segs.forEach((seg) => {
+      const segNum = Number(seg.dataset.seg);
+      seg.classList.toggle('active', segNum === n);
+      seg.classList.toggle('done', segNum < n);
+    });
+  }
+
+  function runValidationAnimation(onDone) {
+    const vsteps = step2b.querySelectorAll('.vstep');
+    vsteps.forEach((v) => v.classList.remove('active', 'done'));
+    let i = 0;
+    function tick() {
+      if (i > 0) vsteps[i - 1].classList.remove('active');
+      if (i > 0) vsteps[i - 1].classList.add('done');
+      if (i >= vsteps.length) { onDone(); return; }
+      vsteps[i].classList.add('active');
+      i++;
+      setTimeout(tick, 480);
+    }
+    tick();
+  }
+
+  function setFieldError(fieldId, isInvalid) {
+    document.getElementById(fieldId).classList.toggle('invalid', isInvalid);
+  }
+
+  // ---- Paso 1 ----
+  step1.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById('inp-nombre').value;
+    const apellido = document.getElementById('inp-apellido').value;
+    const email = document.getElementById('inp-email').value;
+
+    const nombreOk = nombre.trim().length > 0;
+    const apellidoOk = apellido.trim().length > 0;
+    const emailOk = SH.validEmail(email);
+
+    setFieldError('field-nombre', !nombreOk);
+    setFieldError('field-apellido', !apellidoOk);
+    setFieldError('field-email', !emailOk);
+
+    if (!nombreOk || !apellidoOk || !emailOk) return;
+
+    draft.nombre = nombre;
+    draft.apellido = apellido;
+    draft.email = email;
+    goToStep(2);
+  });
+
+  // ---- Paso 2 ----
+  const inpFoto = document.getElementById('inp-foto');
+  const uploadBox = document.getElementById('upload-box');
+  const uploadPreview = document.getElementById('upload-preview');
+  const uploadPreviewImg = document.getElementById('upload-preview-img');
+  const uploadPreviewName = document.getElementById('upload-preview-name');
+  const inpLatas = document.getElementById('inp-latas');
+  const liveChanceValue = document.getElementById('live-chance-value');
+
+  async function handleFoto(file) {
+    if (!file) return;
+    const dataUrl = await SH.fileToDataUrl(file);
+    draft.fotoDataUrl = dataUrl;
+    draft.fotoNombre = file.name;
+    uploadPreviewImg.src = dataUrl;
+    uploadPreviewName.textContent = file.name;
+    uploadPreview.classList.remove('hidden');
+    uploadBox.classList.add('hidden');
+    setFieldError('field-foto', false);
+  }
+
+  inpFoto.addEventListener('change', (e) => handleFoto(e.target.files[0]));
+
+  document.getElementById('upload-remove').addEventListener('click', () => {
+    draft.fotoDataUrl = null;
+    draft.fotoNombre = null;
+    inpFoto.value = '';
+    uploadPreview.classList.add('hidden');
+    uploadBox.classList.remove('hidden');
+  });
+
+  function updateLiveChance() {
+    const val = Math.max(1, parseInt(inpLatas.value || '1', 10) || 1);
+    liveChanceValue.textContent = val;
+  }
+  inpLatas.addEventListener('input', updateLiveChance);
+  document.getElementById('qty-minus').addEventListener('click', () => {
+    inpLatas.value = Math.max(1, (parseInt(inpLatas.value || '1', 10) || 1) - 1);
+    updateLiveChance();
+  });
+  document.getElementById('qty-plus').addEventListener('click', () => {
+    inpLatas.value = Math.max(1, (parseInt(inpLatas.value || '1', 10) || 1) + 1);
+    updateLiveChance();
+  });
+
+  document.getElementById('btn-back-1').addEventListener('click', () => goToStep(1));
+
+  step2.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const latas = parseInt(inpLatas.value || '0', 10);
+    const latasOk = latas >= 1;
+    const fotoOk = !!draft.fotoDataUrl;
+
+    setFieldError('field-latas', !latasOk);
+    setFieldError('field-foto', !fotoOk);
+
+    if (!latasOk || !fotoOk) return;
+
+    draft.latas = latas;
+    goToStep(3);
+
+    runValidationAnimation(() => {
+      const entry = SH.addEntry(draft);
+      const participants = SH.getParticipants();
+      const me = participants.find((p) => p.email === draft.email.trim().toLowerCase());
+
+      document.getElementById('chance-big-value').textContent = me.totalChances;
+      document.getElementById('step3-desc').textContent =
+        `Guardamos tu ticket de ${draft.latas} lata(s). En total acumulaste ${me.totalChances} chance(s) provisorias para el sorteo del Torino 0KM. El análisis final se hace antes del sorteo.`;
+
+      document.getElementById('summary-box').innerHTML = `
+        <div class="summary-row"><span>Nombre</span><b>${escapeHtml(draft.nombre)} ${escapeHtml(draft.apellido)}</b></div>
+        <div class="summary-row"><span>Tu ID de participante</span><b><span class="id-chip">${escapeHtml(me.publicId)}</span></b></div>
+        <div class="summary-row"><span>Tickets cargados</span><b>${me.tickets.length}</b></div>
+        <div class="summary-row"><span>Latas totales</span><b>${me.totalLatas}</b></div>
+        <div class="summary-row"><span>Estado del ticket</span><b><span class="status-badge pending">⏳ Pendiente de análisis</span></b></div>
+      `;
+
+      goToStep(4);
+      SH.showToast('¡Ticket cargado con éxito!');
+    });
+  });
+
+  document.getElementById('btn-add-another').addEventListener('click', () => {
+    inpFoto.value = '';
+    draft.fotoDataUrl = null;
+    draft.fotoNombre = null;
+    inpLatas.value = 1;
+    updateLiveChance();
+    uploadPreview.classList.add('hidden');
+    uploadBox.classList.remove('hidden');
+    goToStep(2);
+  });
+
+  document.getElementById('btn-finish').addEventListener('click', () => {
+    wizardSection.classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    goToStep(1);
+    step1.reset();
+    step2.reset();
+  });
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+      ' ' + d.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // ---- Ticket preview modal ----
+  const ticketPreviewModal = document.getElementById('ticket-preview-modal');
+  document.getElementById('ticket-preview-close').addEventListener('click', () => {
+    ticketPreviewModal.classList.add('hidden');
+  });
+
+  // ---- Lookup modal (cuenta del participante) ----
+  const lookupModal = document.getElementById('lookup-modal');
+  document.getElementById('btn-lookup').addEventListener('click', () => {
+    lookupModal.classList.remove('hidden');
+  });
+  document.getElementById('btn-lookup-close').addEventListener('click', () => {
+    lookupModal.classList.add('hidden');
+  });
+
+  function startAddTicketFlow(me) {
+    draft.nombre = me.nombre;
+    draft.apellido = me.apellido;
+    draft.email = me.email;
+    draft.fotoDataUrl = null;
+    draft.fotoNombre = null;
+    inpFoto.value = '';
+    inpLatas.value = 1;
+    updateLiveChance();
+    uploadPreview.classList.add('hidden');
+    uploadBox.classList.remove('hidden');
+
+    lookupModal.classList.add('hidden');
+    scrollToWizard();
+    goToStep(2);
+  }
+
+  function renderAccountResult(me) {
+    const resultEl = document.getElementById('lookup-result');
+    const ticketsHtml = me.tickets.length > 0
+      ? me.tickets.slice().reverse().map((t) => `
+          <div class="ticket-row">
+            ${t.fotoDataUrl ? `<img class="ticket-row-thumb" src="${t.fotoDataUrl}" data-ticket-id="${t.id}" alt="Ticket" />` : ''}
+            <div class="ticket-row-info">
+              <div class="ticket-row-latas">${t.latas} lata(s) · ${SH.chancesForEntry(t)} chance(s)</div>
+              <div class="ticket-row-date">${fmtDate(t.fecha)}</div>
+            </div>
+          </div>
+        `).join('')
+      : `<div class="account-tickets-empty">Todavía no cargaste ningún ticket.</div>`;
+
+    resultEl.innerHTML = `
+      <div class="summary-box">
+        <div class="summary-row"><span>Participante</span><b>${escapeHtml(me.nombre)} ${escapeHtml(me.apellido)}</b></div>
+        <div class="summary-row"><span>Tu ID de participante</span><b><span class="id-chip">${escapeHtml(me.publicId)}</span></b></div>
+        <div class="summary-row"><span>Latas totales</span><b>${me.totalLatas}</b></div>
+        <div class="summary-row"><span>Chances provisorias</span><b>${me.totalChances}</b></div>
+        <div class="summary-row"><span>Estado</span><b>${me.eliminado ? '<span class="status-badge bad">✕ Eliminado por fraude</span>' : '<span class="status-badge pending">⏳ Pendiente de análisis</span>'}</b></div>
+      </div>
+
+      <div class="account-tickets-head">
+        <span>Tus tickets cargados (${me.tickets.length})</span>
+      </div>
+      <div class="account-tickets">${ticketsHtml}</div>
+
+      <div class="wizard-actions" style="margin-top:18px;">
+        <button class="btn btn-primary btn-block" id="btn-account-add-ticket">+ Cargar otro ticket</button>
+      </div>
+
+      <p class="terms-line">Buscá tu nombre y este ID en la <a href="participantes.html" style="color: var(--gold);">tabla pública de participantes</a> para ver tu posición en el ranking.</p>
+    `;
+
+    resultEl.querySelectorAll('.ticket-row-thumb').forEach((img) => {
+      img.addEventListener('click', () => {
+        const entry = me.tickets.find((t) => t.id === img.dataset.ticketId);
+        if (!entry) return;
+        document.getElementById('ticket-preview-img').src = entry.fotoDataUrl;
+        document.getElementById('ticket-preview-info').innerHTML =
+          `<b>${entry.latas} lata(s)</b> — ${fmtDate(entry.fecha)}`;
+        ticketPreviewModal.classList.remove('hidden');
+      });
+    });
+
+    document.getElementById('btn-account-add-ticket').addEventListener('click', () => startAddTicketFlow(me));
+  }
+
+  document.getElementById('btn-lookup-search').addEventListener('click', () => {
+    const email = document.getElementById('inp-lookup-email').value;
+    const ok = SH.validEmail(email);
+    setFieldError('field-lookup-email', !ok);
+    if (!ok) return;
+
+    const participants = SH.getParticipants();
+    const me = participants.find((p) => p.email === email.trim().toLowerCase());
+    const resultEl = document.getElementById('lookup-result');
+
+    if (!me) {
+      resultEl.innerHTML = `<p class="wizard-desc">No encontramos participaciones con ese correo todavía.</p>`;
+      return;
+    }
+
+    renderAccountResult(me);
+  });
+})();
+</script>
+</body>
+</html>
